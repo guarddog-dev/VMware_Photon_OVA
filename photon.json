@@ -68,22 +68,19 @@
   ],
   "provisioners": [
     {
-      "type": "shell",
-      "scripts": [
-        "scripts/1-installprereqs.sh"
-      ]
+       "type": "shell",
+       "script": "scripts/1-installprereqs.sh",
+       "execute_command": "echo {{ user `guest_password` }} | sudo -S bash -c '{{.Path}}'"
     },
     {
-      "type": "shell",
-      "scripts": [
-        "scripts/2-setuprc.localservice.sh"
-      ]
+       "type": "shell",
+       "script": "scripts/2-setuprc.localservice.sh",
+       "execute_command": "echo {{ user `guest_password` }} | sudo -S bash -c '{{.Path}}'"
     },
     {
-      "type": "shell",
-      "scripts": [
-        "scripts/3-installdocker.sh"
-      ]
+       "type": "shell",
+       "script": "scripts/3-installdocker.sh",
+       "execute_command": "echo {{ user `guest_password` }} | sudo -S bash -c '{{.Path}}'"
     },
     {
        "type": "shell",
@@ -91,22 +88,24 @@
        "execute_command": "echo {{ user `guest_password` }} | sudo -S bash -c '{{.Path}}'"
     },
     {
-      "type": "shell",
-      "scripts": [
-        "scripts/5-installkubelet.sh"
-      ]
+       "type": "shell",
+       "script": "scripts/5-installkubelet.sh",
+       "execute_command": "echo {{ user `guest_password` }} | sudo -S bash -c '{{.Path}}'"
     },
     {
-      "type": "shell",
-      "scripts": [
-        "scripts/6-installextratools.sh"
-      ]
+       "type": "shell",
+       "script": "scripts/6-installextratools.sh",
+       "execute_command": "echo {{ user `guest_password` }} | sudo -S bash -c '{{.Path}}'"
     },
     {
-      "type": "shell",
-      "scripts": [
-        "scripts/100-cleanup.sh"
-      ]
+       "type": "shell",
+       "script": "scripts/99-hardenos.sh",
+       "execute_command": "echo {{ user `guest_password` }} | sudo -S bash -c '{{.Path}}'"
+    },
+    {
+       "type": "shell",
+       "script": "scripts/100-cleanup.sh",
+       "execute_command": "echo {{ user `guest_password` }} | sudo -S bash -c '{{.Path}}'"
     },
     {
       "type": "file",

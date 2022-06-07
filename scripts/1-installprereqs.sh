@@ -31,7 +31,12 @@ tdnf install -y \
   net-tools \
   bindutils \
   dmidecode \
-  rsyslog
+  rsyslog \
+  audit
+  
+#Enable Audit Daemon Service
+sudo systemctl enable auditd.service
+sudo systemctl start auditd.service
   
 #Validate that root is a sudoer
 echo '> Validating root is a sudoer...'

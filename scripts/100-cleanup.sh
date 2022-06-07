@@ -72,12 +72,12 @@ sudo mv /etc/security/pwquality.conf /${USERD}/setup/pwquality.conf
 sudo apt-get install libpam-pwquality -y
 sudo mv /${USERD}/setup/pwquality.conf /etc/security/pwquality.conf
 # fix audit permissions
-sudo chmod 0655 /etc/audit
-sudo chmod 0655 /etc/audit/*
+#sudo chmod 0655 /etc/audit
+#sudo chmod 0655 /etc/audit/*
 # postfix_network_listening_disabled
 sudo sed -i "s/inet_interfaces = all/inet_interfaces = loopback-only/g" /etc/postfix/main.cf
 # fix audit permissions file access
-sudo chmod 0655 /etc/audit/*
+#sudo chmod 0655 /etc/audit/*
 # fix shadow file permissions access
 sudo chmod 0640 /etc/shadow
 # fix shadow backup file permissions access

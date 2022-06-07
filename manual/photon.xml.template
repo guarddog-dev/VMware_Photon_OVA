@@ -67,8 +67,8 @@
         </Property>
       <Category>Credentials</Category>
         <Property ovf:key="guestinfo.root_password" ovf:password="true" ovf:type="string" ovf:userConfigurable="true" ovf:value="">
-            <Label>Administrator Password</Label>
-            <Description>Password to login in as Administrator (root). Please use a secure password.
+            <Label>Root Password</Label>
+            <Description>Password to login in as root. Please use a secure password.
 Minumum Password length is 14 characters. Uppercase, Lowercase, #'s, and non-alphanumberic symbols are required.
             </Description>
         </Property>
