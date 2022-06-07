@@ -11,7 +11,7 @@ curl -LO "https://dl.k8s.io/release/${RELEASE}/bin/linux/${ARCH}/{kubectl}"
 #chmod +x {kubeadm,kubelet,kubectl}
 #install -o root -g root -m 0755 kubeadm /usr/local/bin/kubeadm
 #install -o root -g root -m 0755 kubelet /usr/local/bin/kubelet
-install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 rm kube*
 
 #Disable Swap

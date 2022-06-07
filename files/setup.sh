@@ -1,52 +1,177 @@
 #!/bin/bash
-# Copyright 2019 VMware, Inc. All rights reserved.
-# SPDX-License-Identifier: BSD-2
 
-set -euo pipefail
+# Set user account that will manage OS post OVA deployment
+USERD=root
 
-# Extract all OVF Properties
-DEBUG=$(/root/setup/getOvfProperty.py "guestinfo.debug")
-HOSTNAME=$(/root/setup/getOvfProperty.py "guestinfo.hostname")
-IP_ADDRESS=$(/root/setup/getOvfProperty.py "guestinfo.ipaddress")
-NETMASK=$(/root/setup/getOvfProperty.py "guestinfo.netmask" | awk -F ' ' '{print $1}')
-GATEWAY=$(/root/setup/getOvfProperty.py "guestinfo.gateway")
-DNS_SERVER=$(/root/setup/getOvfProperty.py "guestinfo.dns")
-DNS_DOMAIN=$(/root/setup/getOvfProperty.py "guestinfo.domain")
-NTP_SERVER=$(/root/setup/getOvfProperty.py "guestinfo.ntp")
-ROOT_PASSWORD=$(/root/setup/getOvfProperty.py "guestinfo.root_password")
-HARBOR_PASSWORD=$(/root/setup/getOvfProperty.py "guestinfo.harbor_password")
-DOCKER_NETWORK_CIDR=$(/root/setup/getOvfProperty.py "guestinfo.docker_network_cidr")
+#set -euo pipefail
 
-if [ -e /root/ran_customization ]; then
+# Check if Configuration has run already
+if [ ! -f /${USERD}/ran_customization ]; 
+then
+	# Extract all OVF Properties
+	VMTOOLSDSTATUS=$(systemctl show -p ActiveState vmtoolsd.service | sed 's/ActiveState=//g')
+	GUESTINFOTEST=$(/usr/bin/vmtoolsd --cmd 'info-get guestinfo.ovfEnv')
+	IP_ADDRESS=$(/${USERD}/setup/getOvfProperty.py "guestinfo.ipaddress")
+	if [ $VMTOOLSDSTATUS == "active" ]; 
+	then
+		if [[ ! -z "$GUESTINFOTEST" ]];
+		then
+			if [[ ! -z "$IP_ADDRESS" ]];
+			then
+				echo -e "\e[92mVM Guest Info Detected. Configuring for VMware using Static IP..." > /dev/console
+				HOSTNAME=$(/${USERD}/setup/getOvfProperty.py "guestinfo.hostname")
+				IP_ADDRESS=$(/${USERD}/setup/getOvfProperty.py "guestinfo.ipaddress")
+				NETMASK=$(/${USERD}/setup/getOvfProperty.py "guestinfo.netmask" | awk -F ' ' '{print $1}')
+				GATEWAY=$(/${USERD}/setup/getOvfProperty.py "guestinfo.gateway")
+				DNS_SERVER=$(/${USERD}/setup/getOvfProperty.py "guestinfo.dns")
+				DNS_DOMAIN=$(/${USERD}/setup/getOvfProperty.py "guestinfo.domain")
+				NTP_SERVER=$(/${USERD}/setup/getOvfProperty.py "guestinfo.ntp")
+				FALLBACKNTP_SERVER=$(/${USERD}/setup/getOvfProperty.py "guestinfo.fallbackntp")
+				TIMEZONE=$(/${USERD}/setup/getOvfProperty.py "guestinfo.timezone")
+				ROOT_PASSWORD=$(/${USERD}/setup/getOvfProperty.py "guestinfo.root_password")
+				SSH_ENABLE=$(/${USERD}/setup/getOvfProperty.py "guestinfo.cis.appliance.ssh.enabled")
+				SYSLOG_DESTINATION=$(/${USERD}/setup/getOvfProperty.py "guestinfo.syslogdestination")
+				SYSLOG_PORT=$(/${USERD}/setup/getOvfProperty.py "guestinfo.syslogport")
+				SYSLOG_PROTOCOL=$(/${USERD}/setup/getOvfProperty.py "guestinfo.syslogprotocol")
+			else
+				echo -e "\e[92mVM Guest Info Detected. Configuring for VMware using DHCP IP..." > /dev/console
+				HOSTNAME=$(/${USERD}/setup/getOvfProperty.py "guestinfo.hostname")
+				IP_ADDRESS=""
+				NETMASK=""
+				GATEWAY=""
+				DNS_SERVER=$(/${USERD}/setup/getOvfProperty.py "guestinfo.dns")
+				DNS_DOMAIN=$(/${USERD}/setup/getOvfProperty.py "guestinfo.domain")
+				NTP_SERVER=$(/${USERD}/setup/getOvfProperty.py "guestinfo.ntp")
+				FALLBACKNTP_SERVER=$(/${USERD}/setup/getOvfProperty.py "guestinfo.fallbackntp")
+				TIMEZONE=$(/${USERD}/setup/getOvfProperty.py "guestinfo.timezone")
+				ROOT_PASSWORD=$(/${USERD}/setup/getOvfProperty.py "guestinfo.root_password")
+				SSH_ENABLE=$(/${USERD}/setup/getOvfProperty.py "guestinfo.cis.appliance.ssh.enabled")
+				SYSLOG_DESTINATION=$(/${USERD}/setup/getOvfProperty.py "guestinfo.syslogdestination")
+				SYSLOG_PORT=$(/${USERD}/setup/getOvfProperty.py "guestinfo.syslogport")
+				SYSLOG_PROTOCOL=$(/${USERD}/setup/getOvfProperty.py "guestinfo.syslogprotocol")
+			fi
+		fi
+	fi
+
+	# If Guest Info does not exist ask user to fill out fields
+	if [ -z "$GUESTINFOTEST" ]; 
+	then
+		echo -e "\e[92mVMTools Guest Info not detected. Setting Baremetal for DHCP ..." > /dev/console
+		RANN=$(( $RANDOM % 10000 + 1 ))
+		HOSTNAME="fido-$RANN.guarddog.ai"
+		IP_ADDRESS=""
+		NETMASK=""
+		GATEWAY=""
+		DNS_SERVER="8.8.8.8,8.8.4.4"
+		DNS_DOMAIN="guarddog.ai"
+		NTP_SERVER="0.pool.ntp.org"
+		FALLBACKNTP_SERVER="1.pool.ntp.org"
+		TIMEZONE="Etc/UTC"
+		ROOT_PASSWORD="Beta-Max12345!@#$%"
+		SSH_ENABLE="True"
+		SYSLOG_DESTINATION=""
+		SYSLOG_PORT=""
+		SYSLOG_PROTOCOL=""
+		
+		: '
+		clear
+		echo -e "\e[92mVMTools Guest Info not detected, Running Baremetal configurator ..." > /dev/console
+		read -p "Do you wish to set a static IP address? y/n" yn
+		clear
+		case $yn in
+		[Yy]* )
+			read -p "Enter the Hostname (example fido.guarddog.lab): " HOSTNAME < /dev/tty
+			clear
+			read -p "Enter IPv4 address (example 172.26.5.100): " IP_ADDRESS < /dev/tty
+			clear
+			read -p "Enter Netmask (example 24 (24 is for 255.255.255.0)): " NETMASK < /dev/tty
+			clear
+			read -p "Enter the IP Gateway (example 172.26.4.1: " GATEWAY < /dev/tty
+			clear
+			read -p "Enter the DNS server(s) (examples 172.26.4.32 or 172.26.4.32,172.26.4.33): " DNS_SERVER < /dev/tty
+			clear
+			read -p "Enter the DNS domain (example guarddog.lab): " DNS_DOMAIN < /dev/tty
+			clear
+			read -p "Enter the Primary NTP Server (example 0.ntp.pool.org): " NTP_SERVER < /dev/tty
+			clear
+			read -p "Enter the Fallback NTP Server (example 1.ntp.pool.org) (leave blank for none): " FALLBACKNTP_SERVER < /dev/tty
+			clear
+			read -p "Please enter new $USERD password: " -s ROOT_PASSWORD < /dev/tty
+			clear
+			read -p "Do you wish to enable the SSH Client? y/n " sshyn < /dev/tty
+			case $sshyn in
+			[Yy]* )
+				SSH_ENABLE = "True"
+				clear
+			;;
+			[Nn]* )
+				SSH_ENABLE = "False"
+				clear
+			;;
+			* ) echo "Please answer yes or no." < /dev/tty;;
+			esac
+			;;
+		[Nn]* )
+			read -p "Enter the Hostname (example fido.guarddog.lab): " HOSTNAME < /dev/tty
+			clear
+			IP_ADDRESS=""
+			NETMASK=""
+			GATEWAY=""
+			read -p "Enter the DNS server(s) (examples 172.26.4.32 or 172.26.4.32,172.26.4.33): " DNS_SERVER < /dev/tty
+			clear
+			read -p "Enter the DNS domain (example guarddog.lab): " DNS_DOMAIN < /dev/tty
+			clear
+			read -p "Enter the Primary NTP Server (example 0.ntp.pool.org): " NTP_SERVER < /dev/tty
+			clear
+			read -p "Enter the Fallback NTP Server (example 1.ntp.pool.org) (leave blank for none): " FALLBACKNTP_SERVER < /dev/tty
+			clear
+			read -p "Please enter new $USERD password: " -s ROOT_PASSWORD < /dev/tty
+			clear
+			read -p "Do you wish to enable the SSH Client " sshyn < /dev/tty
+			case $sshyn in
+			[Yy]* )
+				SSH_ENABLE = "True"
+				clear
+			;;
+			[Nn]* )
+				SSH_ENABLE = "False"
+				clear
+			;;
+			* ) echo "Please answer yes or no." < /dev/tty;;
+			esac
+			;;
+		* ) echo "Please answer yes or no." < /dev/tty;;
+		esac
+		'
+	fi
+fi
+
+if [ -e /${USERD}/ran_customization ]; 
+then
     exit
 else
-	HARBOR_LOG_FILE=/var/log/bootstrap.log
-	if [ ${DEBUG} == "True" ]; then
-		HARBOR_LOG_FILE=/var/log/bootstrap-debug.log
-		set -x
-		exec 2>> ${HARBOR_LOG_FILE}
-		echo
-        echo "### WARNING -- DEBUG LOG CONTAINS ALL EXECUTED COMMANDS WHICH INCLUDES CREDENTIALS -- WARNING ###"
-        echo "### WARNING --             PLEASE REMOVE CREDENTIALS BEFORE SHARING LOG            -- WARNING ###"
-        echo
-	fi
 
 	echo -e "\e[92mStarting Customization ..." > /dev/console
 
 	echo -e "\e[92mStarting OS Configuration ..." > /dev/console
-	. /root/setup/setup-01-os.sh
-
+	. /${USERD}/setup/setup-01-os.sh
+	sleep 20
+	
 	echo -e "\e[92mStarting Network Configuration ..." > /dev/console
-	. /root/setup/setup-02-network.sh
-
-	echo -e "\e[92mStarting Harbor Configuration ..." > /dev/console
-	. /root/setup/setup-03-harbor.sh
-
+	. /${USERD}/setup/setup-02-network.sh
+	sleep 20
+	
+	#echo -e "\e[92mStarting GuardDog Configuration ..." > /dev/console
+	#. /${USERD}/setup/setup-03-GuardDog.sh
+	
 	echo -e "\e[92mCustomization Completed ..." > /dev/console
 
 	# Clear guestinfo.ovfEnv
-	vmtoolsd --cmd "info-set guestinfo.ovfEnv NULL"
+	#vmtoolsd --cmd "info-set guestinfo.ovfEnv NULL"
 
 	# Ensure we don't run customization again
-	touch /root/ran_customization
+	touch /${USERD}/ran_customization
+	
+	#Reboot
+	sudo reboot
 fi

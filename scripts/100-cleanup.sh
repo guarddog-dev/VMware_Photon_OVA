@@ -83,21 +83,21 @@ sudo chmod 0640 /etc/shadow
 # fix shadow backup file permissions access
 sudo chmod 0640 /etc/shadow-
 # set root password (required for single user mode access)
-THE_ROOT_PASSWORD='Gu@RdD0gRo^k$!'
-echo "root:${THE_ROOT_PASSWORD}" | sudo /usr/sbin/chpasswd
+#THE_ROOT_PASSWORD='Gu@RdD0gRo^k$!'
+#echo "root:${THE_ROOT_PASSWORD}" | sudo /usr/sbin/chpasswd
 # set root account timeouts
-sudo chage -M 5 root
-sudo chage -m 1 root
+#sudo chage -M 5 root
+#sudo chage -m 1 root
 # disable root ssh login - only required since root has to be an active account - not a CIS requirement
-sudo sed -i "s#root:/bin/bash#root:/sbin/nologin#g" /etc/passwd
+#sudo sed -i "s#root:/bin/bash#root:/sbin/nologin#g" /etc/passwd
 # disable postfix - has_nonlocal_mta
 sudo update-rc.d postfix disable
 
-#Set administrator password attributes
+#Set root password attributes
 echo '> Setting administrator password attributes post CIS Remediation...'
 sudo chage -m 0 root
 
-#List administrator password attributes
+#List root password attributes
 echo '> Listing administrator password attributes post CIS Remediation...'
 sudo chage -l root
 

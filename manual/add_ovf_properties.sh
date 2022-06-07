@@ -28,6 +28,8 @@ else
     sed -i '/vmw:ExtraConfig.*/d' ${OVF_PATH}/${PHOTON_APPLIANCE_NAME}.ovf
 fi
 
-ovftool ${OVF_PATH}/${PHOTON_APPLIANCE_NAME}.ovf ${OUTPUT_PATH}/${FINAL_PHOTON_APPLIANCE_NAME}.ova
+#ovftool ${OVF_PATH}/${PHOTON_APPLIANCE_NAME}.ovf ${OUTPUT_PATH}/${FINAL_PHOTON_APPLIANCE_NAME}.ova
+ovftool --eula@=eula.txt ${OVF_PATH}/${PHOTON_APPLIANCE_NAME}.ovf ${OUTPUT_PATH}/${FINAL_PHOTON_APPLIANCE_NAME}.ova
+
 rm -rf ${OVF_PATH}
 rm -f photon.xml

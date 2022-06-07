@@ -110,11 +110,6 @@
     },
     {
       "type": "file",
-      "source": "files/rc.local",
-      "destination": "/etc/rc.d/rc.local"
-    },
-    {
-      "type": "file",
       "source": "files/getOvfProperty.py",
       "destination": "/root/setup/getOvfProperty.py"
     },

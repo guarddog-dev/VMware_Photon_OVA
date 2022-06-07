@@ -29,6 +29,8 @@ tdnf install -y \
   git \
   chrony \
   net-tools \
+  bindutils \
+  dmidecode \
   rsyslog
   
 #Validate that root is a sudoer
