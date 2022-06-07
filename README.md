@@ -5,9 +5,9 @@
 1. Configure the variables in photon.json. If you wish to change the USERD variable from administrator, you will also need to update many of the shell script files with the updated user account (USERD=[xx]).
 Note: Do not put any capital letters in the name of the VM if you change the vm name, as this will cause the install to fail.
 
-2. Configure the variables in the ubuntu-builder.json. 
+2. Configure the variables in the photon-builder.json. 
 
-3. Configure the variables in the ubuntu-version.json.
+3. Configure the variables in the photon-version.json.
 
 4. Enable SSH on the host you will be building with. Packer will work directly with that host (does not require a VCSA).
 
