@@ -2,7 +2,7 @@
 
 
 ## Prior to first run:
-1. Configure the variables in ubuntu-20.04.json. If you wish to change the USERD variable from administrator, you will also need to update many of the shell script files with the updated user account (USERD=[xx]).
+1. Configure the variables in photon.json. If you wish to change the USERD variable from administrator, you will also need to update many of the shell script files with the updated user account (USERD=[xx]).
 Note: Do not put any capital letters in the name of the VM if you change the vm name, as this will cause the install to fail.
 
 2. Configure the variables in the ubuntu-builder.json. 
@@ -31,7 +31,7 @@ Note: Do not put any capital letters in the name of the VM if you change the vm 
 
 >Get-AdvancedSetting -Name Net.GuestIPHack -Entity $VMHOST
 
-6. Update the Ubuntu ISO URL/Checksums with newer versions if needed. If you wish to do this, you will also likely need to update the ubuntu-20.04.json "boot_command" section for the updated OS version.
+6. Update the Photon ISO URL/Checksums with newer versions if needed. If you wish to do this, you will also likely need to update the photon.json "boot_command" section for the updated OS version.
 
 7. Install ovftool, git-all, powershell, and packer utilities.
 #### Due to requirements, it is recommended to build this OVA from a Ubuntu Linux desktop with a GUI.
@@ -70,7 +70,7 @@ Packer will open a random HTTP port from 8000 to 9000 as part of the packer buil
 Approximately 45 minutes depending upon internet/network connectivity/CPU/drive speed.
 
 ## Troubleshooting
-The most common problem I have run into is not having enough wait time set for the OS to complete inital installation. This is dependant on the internet and your network since Ubuntu likes to download/install security updates as part of the OS deployment process. If the time is not long enough, your OS will not complete the install prior to the rest of the VNC keyboard commands being run, causing everything to fail. If you need to tweak this, simply move up by increments of 30 seconds until you find the sweet spot. To set this, simply open the ubuntu-20.04.json and update the line (34 presently) "<tab><enter><wait500>" from 500 to 530 or 600.
+The most common problem I have run into is not having enough wait time set for the OS to complete inital installation. If the time is not long enough, your OS will not complete the install prior to the rest of the VNC keyboard commands being run, causing everything to fail. If you need to tweak this, simply move up by increments of 25 seconds until you find the sweet spot. To set this, simply open the photon.json and update the line (27 presently) "<enter><wait65>", from 65 to 90.
 
 ## Reference Website info on Packer for VMware
 https://packer.io/plugins/builders/vmware/iso
