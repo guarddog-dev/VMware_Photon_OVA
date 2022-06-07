@@ -74,10 +74,10 @@ sudo mv rc.local /etc/rc.local
 sudo chmod u+x /etc/rc.local
 #less /etc/rc.local
 
-#Enable rc-local Service
-echo '> Disable rc.local Service...'
-sudo systemctl daemon-reload
-sudo systemctl disable rc-local.service
 #sudo systemctl status rc-local.service
 sudo touch /${USERD}/ran_customization
 
+#Enable rc-local Service
+echo '> Enable rc.local Service...'
+sudo systemctl daemon-reload
+sudo systemctl enable --now rc-local.service

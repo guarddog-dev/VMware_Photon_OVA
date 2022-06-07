@@ -9,8 +9,8 @@ tanzutce_version="v0.12.1"
 # Clean up Tanzu Installation Binaries
 echo '> Cleaning up Tanzu Installation Binaries ...'
 #export RELEASE=$(curl -s https://github.com/vmware-tanzu/community-edition/releases/latest | grep tag/ | cut -d '/' -f 8 | cut -d '"' -f 1)
-sudo rm -r /home/${USERD}/tce-linux-amd64-${tanzutce_version}/*
-sudo rmdir /home/${USERD}/tce-linux-amd64-${tanzutce_version}
+sudo rm -r /tanzu/tce-linux-amd64-${tanzutce_version}/*
+sudo rmdir /tanzu/tce-linux-amd64-${tanzutce_version}
 
 # Update
 echo '> Updating all Binaries ...'
@@ -101,6 +101,17 @@ sudo chage -m 0 root
 echo '> Listing administrator password attributes post CIS Remediation...'
 sudo chage -l root
 
+# Zero out the free space to save space in the final image
+echo '> Zeroing device to make space (this will take a while)...'
+# Primary Drive
+dd if=/dev/zero of=/EMPTY bs=1M || true; sync; sleep 1; sync
+rm -f /EMPTY; sync; sleep 1; sync
+
+# Listing storage space
+echo '> Listing Storage Space...'
+df -h
+echo ' '
+
 # Set random password
 echo '> Setting random password...'
 RANDOM_PASSWORD=$(< /dev/urandom tr -dc '_A-Z-a-z-0-9!@#$%*()-+' | head -c${1:-32};echo;)
@@ -113,17 +124,6 @@ echo '> Clearing Password History...'
 sudo echo "" > /tmp/opasswd
 sudo mv /tmp/opasswd /etc/security/opasswd
 sudo rm /etc/security/opasswd.old
-
-# Zero out the free space to save space in the final image
-echo '> Zeroing device to make space (this will take a while)...'
-# Primary Drive
-dd if=/dev/zero of=/EMPTY bs=1M || true; sync; sleep 1; sync
-rm -f /EMPTY; sync; sleep 1; sync
-
-# Listing storage space
-echo '> Listing Storage Space...'
-df -h
-echo ' '
 
 # Clear History file
 echo '> Clearing History File...'

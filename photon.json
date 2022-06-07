@@ -87,35 +87,19 @@
     },
     {
        "type": "shell",
-       "script": "scripts/4-downloadtanzu.sh",
+       "script": "scripts/4-installtanzutce.sh",
        "execute_command": "echo {{ user `guest_password` }} | sudo -S bash -c '{{.Path}}'"
-    },
-    {
-       "type": "shell",
-       "script": "scripts/5-tempfixtanzuinstall.sh",
-       "execute_command": "echo {{ user `guest_password` }} | sudo -S bash -c '{{.Path}}' stduser"
-    },
-    {
-       "type": "shell",
-       "script": "scripts/5-installtanzu.sh",
-       "execute_command": "echo {{ user `guest_password` }} | bash -c '{{.Path}}' stduser"
-    },
-    {
-       "type": "shell",
-       "script": "scripts/reboot.sh",
-       "execute_command": "echo {{ user `guest_password` }} | sudo -S bash -c '{{.Path}}'",
-       "expect_disconnect": true
     },
     {
       "type": "shell",
       "scripts": [
-        "scripts/6-installkubelet.sh"
+        "scripts/5-installkubelet.sh"
       ]
     },
     {
       "type": "shell",
       "scripts": [
-        "scripts/7-installextratools.sh"
+        "scripts/6-installextratools.sh"
       ]
     },
     {
@@ -148,11 +132,6 @@
       "type": "file",
       "source": "files/setup-02-network.sh",
       "destination": "/root/setup/setup-02-network.sh"
-    },
-    {
-      "type": "file",
-      "source": "files/setup-03-harbor.sh",
-      "destination": "/root/setup/setup-03-harbor.sh"
     }
   ],
   "post-processors": [

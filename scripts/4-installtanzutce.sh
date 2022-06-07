@@ -3,8 +3,6 @@
 echo '> Downloading Tanzu Community Edition...'
 
 # Set Versions
-USERD="root"
-STD_USER="stduser"
 tanzutce_version="v0.12.1"
 
 #Download Tanzue Community Edition
@@ -17,6 +15,20 @@ wget https://github.com/vmware-tanzu/community-edition/releases/download/$tanzut
 echo "> Extracting Tanzu Community Edition: Build $tanzutce_version..."
 sudo tar xzvf tce-linux-amd64-${tanzutce_version}.tar.gz
 
-#Workaround
-echo "> Pre-Installing Tanzu Community Edition Binary: Build $tanzutce_version..."
-sudo install /tanzu/tce-linux-amd64-${tanzutce_version}/tanzu /usr/local/bin
+#Install Tanzu
+echo "> Installing Tanzu Community Edition Binary: Build $tanzutce_version..."
+cd /tanzu/tce-linux-amd64-${tanzutce_version}
+ALLOW_INSTALL_AS_ROOT=true ./install.sh
+
+#Validate Version
+echo "> Validating Tanzu Community Edition Binary..."
+tanzu version
+
+##Cleanup Tanzu gz file
+echo "> Cleaning up tce-linux-amd64-$tanzutce_version.tar.gz file..."
+sudo rm /tanzu/tce-linux-amd64-$tanzutce_version.tar.gz
+
+#Set up Auto Completion Permanently for Tanzu
+#Found bug. Created Bug report: https://github.com/vmware-tanzu/community-edition/issues/3758
+echo -e '> Setting up Auto Complete permanently for Tanzu...'
+source <(tanzu completion bash)
