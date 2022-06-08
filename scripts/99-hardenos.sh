@@ -26,7 +26,8 @@ sudo echo "#authpriv" >> /etc/rsyslog.conf
 sudo echo "authpriv.*			/var/log/audit/sshinfo.log" >> /etc/rsyslog.conf
 
 # set system-auth
-sudo echo "auth Â  Â required Â  Â  Â  Â pam_tally2.so file=/var/log/tallylog deny=3 onerr=fail even_deny_root unlock_time=86400 root_unlock_time=300" >> /etc/pam.d/system-auth
+# causes issue with login
+#sudo echo "auth Â  Â required Â  Â  Â  Â pam_tally2.so file=/var/log/tallylog deny=3 onerr=fail even_deny_root unlock_time=86400 root_unlock_time=300" >> /etc/pam.d/system-auth
 
 # Set tmout in profile.d
 sudo cat > /etc/profile.d/tmout.sh  << EOF
@@ -77,7 +78,7 @@ EOF
 sudo sed -i "s/max_log_file_action = ROTATE/max_log_file_action = IGNORE/g" /etc/audit/auditd.conf
 
 # Set fail delay on login defs
-sudo sed -i 's/# FAIL_DELAY/FAIL_DELAY		4 #/g' /etc/login.defs
+sudo sed -i 's/# FAIL_DELAY/FAIL_DELAY/g' /etc/login.defs
 
 
 

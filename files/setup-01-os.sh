@@ -14,8 +14,8 @@ then
 	#Regenerate SSH Keys
 	sudo dpkg-reconfigure openssh-server
 	#Enable Services
-	sudo systemctl enable ssh
-	sudo systemctl start ssh
+	sudo systemctl enable sshd
+	sudo systemctl start sshd
 fi
 if [ "$SSH_ENABLE" = "False" ];
 then
@@ -23,8 +23,8 @@ then
 	#Regenerate SSH Keys
 	sudo dpkg-reconfigure openssh-server
 	#Enable Services
-	sudo systemctl disable ssh
-	sudo systemctl stop ssh
+	sudo systemctl disable sshd
+	sudo systemctl stop sshd
 fi
 
 

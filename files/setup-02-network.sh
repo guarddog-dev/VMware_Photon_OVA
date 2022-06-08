@@ -86,7 +86,7 @@ sudo timedatectl set-ntp true
 sudo systemctl disable systemd-timesyncd
 
 # Set Hostname
-echo -e "\e[92m  Configuring Hostname $HOSTNAME ..." > /dev/console
+echo -e "\e[92m  Configuring Hostname ..." > /dev/console
 sudo cp /etc/hosts /${USERD}/setup/hosts
 SHORTNAME=$(echo $HOSTNAME | cut -d"." -f1)
 sudo sed -ie "/[[:space:]]localhost/d" /${USERD}/setup/hosts
@@ -104,10 +104,10 @@ echo -e "\e[92m  Restarting Timesync ..." > /dev/console
 sudo systemctl restart chronyd
 sudo systemctl restart chrony
 
-# Setup Syslog
+# Configure Syslog
 if [[ ! -z "$SYSLOG_DESTINATION" ]];
 then
-	echo -e "\e[92m  Setting Remote Syslog to $SYSLOG_DESTINATION using the $SYSLOG_PROTOCOL protocol ..." > /dev/console
+	echo -e "\e[92m  Configuring Remote Syslog ..." > /dev/console
 	sudo iptables -A OUTPUT -p $SYSLOG_PROTOCOL -d $SYSLOG_DESTINATION --dport $SYSLOG_PORT -j ACCEPT
 	sudo cp /etc/rsyslog.conf /${USERD}/setup/rsyslog.conf
 	if [[ $SYSLOG_PROTOCOL == "udp" ]];

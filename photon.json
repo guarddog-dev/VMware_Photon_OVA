@@ -89,12 +89,17 @@
     },
     {
        "type": "shell",
-       "script": "scripts/5-installkubelet.sh",
+       "script": "scripts/5-installkubectl.sh",
        "execute_command": "echo {{ user `guest_password` }} | sudo -S bash -c '{{.Path}}'"
     },
     {
        "type": "shell",
        "script": "scripts/6-installextratools.sh",
+       "execute_command": "echo {{ user `guest_password` }} | sudo -S bash -c '{{.Path}}'"
+    },
+    {
+       "type": "shell",
+       "script": "scripts/50-installrear.sh",
        "execute_command": "echo {{ user `guest_password` }} | sudo -S bash -c '{{.Path}}'"
     },
     {
@@ -126,6 +131,11 @@
       "type": "file",
       "source": "files/setup-02-network.sh",
       "destination": "/root/setup/setup-02-network.sh"
+    },
+    {
+      "type": "file",
+      "source": "files/site.conf",
+      "destination": "/etc/rear/site.conf"
     }
   ],
   "post-processors": [

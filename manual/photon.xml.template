@@ -6,12 +6,12 @@
       <ProductUrl>https://guardDog.ai/</ProductUrl>
       <VendorUrl>https://guardDog.ai/</VendorUrl>
       <Category>VM Settings</Category>
-        <Property ovf:key="guestinfo.hostname" ovf:type="string" ovf:userConfigurable="true" ovf:value="photontce.guarddog.lab">
+        <Property ovf:key="guestinfo.hostname" ovf:type="string" ovf:userConfigurable="true" ovf:value="photontce.guarddog.lab" ovf:required="true">
             <Label>Hostname</Label>
             <Description>Hostname of system</Description>
         </Property>
       <Category>VM Settings</Category>
-        <Property ovf:key="guestinfo.ipaddress" ovf:type="string" ovf:userConfigurable="true" ovf:value="172.26.5.101">
+        <Property ovf:key="guestinfo.ipaddress" ovf:type="string" ovf:userConfigurable="true" ovf:value="172.26.5.101" ovf:required="true">
             <Label>IP Address</Label>
             <Description>IP Address of the system</Description>
         </Property>
@@ -21,17 +21,17 @@
             <Description>Network Prefix</Description>
         </Property>
       <Category>VM Settings</Category>
-        <Property ovf:key="guestinfo.gateway" ovf:type="string" ovf:userConfigurable="true" ovf:value="172.26.4.1">
+        <Property ovf:key="guestinfo.gateway" ovf:type="string" ovf:userConfigurable="true" ovf:value="172.26.4.1" ovf:required="true">
             <Label>Gateway</Label>
             <Description>Gateway of the system</Description>
         </Property>
       <Category>VM Settings</Category>
-        <Property ovf:key="guestinfo.ntp" ovf:type="string" ovf:userConfigurable="true" ovf:value="0.pool.ntp.org">
+        <Property ovf:key="guestinfo.ntp" ovf:type="string" ovf:userConfigurable="true" ovf:value="0.pool.ntp.org" ovf:required="true">
             <Label>NTP Server</Label>
             <Description>NTP Server</Description>
         </Property>
       <Category>VM Settings</Category>
-	<Property ovf:key="guestinfo.fallbackntp" ovf:type="string" ovf:userConfigurable="true" ovf:value="1.pool.ntp.org">
+	<Property ovf:key="guestinfo.fallbackntp" ovf:type="string" ovf:userConfigurable="true" ovf:value="1.pool.ntp.org" ovf:required="true">
             <Label>Fall Back NTP Server</Label>
             <Description>Fall Back NTP Server</Description>
         </Property>
@@ -41,22 +41,22 @@
           <Description>Select the proper timezone setting for this VM or leave default Etc/UTC.</Description>
         </Property>
       <Category>VM Settings</Category>
-        <Property ovf:key="guestinfo.dns" ovf:type="string" ovf:userConfigurable="true" ovf:value="172.26.6.31,172.26.6.32">
+        <Property ovf:key="guestinfo.dns" ovf:type="string" ovf:userConfigurable="true" ovf:value="172.26.6.31,172.26.6.32" ovf:required="true">
             <Label>DNS</Label>
             <Description>DNS Server (comma seperated)</Description>
         </Property>
       <Category>VM Settings</Category>
-        <Property ovf:key="guestinfo.domain" ovf:type="string" ovf:userConfigurable="true" ovf:value="guarddog.lab">
+        <Property ovf:key="guestinfo.domain" ovf:type="string" ovf:userConfigurable="true" ovf:value="guarddog.lab" ovf:required="true">
             <Label>DNS Searh Domain(s)</Label>
             <Description>DNS Domain</Description>
         </Property>
       <Category>Syslog</Category>
-        <Property ovf:key="guestinfo.syslogdestination" ovf:type="string" ovf:userConfigurable="true" ovf:value="loginsight.guarddog.lab">
+        <Property ovf:key="guestinfo.syslogdestination" ovf:type="string" ovf:userConfigurable="true" ovf:value="loginsight.guarddog.lab" ovf:required="false">
             <Label>Syslog Destination</Label>
             <Description>Set the appliance to forward the system logs to a central Syslog server using a specified IP Address or DNS Name. Leave blank to disable.</Description>
         </Property>
       <Category>Syslog</Category>
-        <Property ovf:key="guestinfo.syslogport" ovf:type="string" ovf:userConfigurable="true" ovf:value="514">
+        <Property ovf:key="guestinfo.syslogport" ovf:type="string" ovf:userConfigurable="true" ovf:value="514" ovf:required="false">
             <Label>Syslog Port</Label>
             <Description>Set the port to forward the system logs to. Leave blank to disable.</Description>
         </Property>
@@ -66,7 +66,7 @@
             <Description>Set the Syslog protocol to UDP or TCP.</Description>
         </Property>
       <Category>Credentials</Category>
-        <Property ovf:key="guestinfo.root_password" ovf:password="true" ovf:type="string" ovf:userConfigurable="true" ovf:value="">
+        <Property ovf:key="guestinfo.root_password" ovf:password="true" ovf:type="string" ovf:userConfigurable="true" ovf:value="" ovf:required="true" ovf:qualifiers="MinLen(14)">
             <Label>Root Password</Label>
             <Description>Password to login in as root. Please use a secure password.
 Minumum Password length is 14 characters. Uppercase, Lowercase, #'s, and non-alphanumberic symbols are required.

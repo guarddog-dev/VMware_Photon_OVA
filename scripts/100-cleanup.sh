@@ -18,6 +18,7 @@ tdnf -y update photon-repos
 tdnf clean all
 tdnf makecache
 tdnf -y update
+tdnf clean all
 
 # Cleans apt-get
 echo '> Clearing tdnf cache...'
@@ -65,12 +66,11 @@ sudo rm -rf /var/log/journal/*
 sudo rm -f /var/lib/dhcp/*
 
 # Fix Configuration issues post CIS Remediation
-# Fix password pwquality.conf issues
-echo '> Fixing Ubuntu configuration issues post CIS Remediation...'
-sudo chmod u=rw,g=r,o=r /etc/security/pwquality.conf
-sudo mv /etc/security/pwquality.conf /${USERD}/setup/pwquality.conf
-sudo apt-get install libpam-pwquality -y
-sudo mv /${USERD}/setup/pwquality.conf /etc/security/pwquality.conf
+echo '> Setting Security best practices...'
+#sudo chmod u=rw,g=r,o=r /etc/security/pwquality.conf
+#sudo mv /etc/security/pwquality.conf /${USERD}/setup/pwquality.conf
+#sudo tdnf install libpwquality -y
+#sudo mv /${USERD}/setup/pwquality.conf /etc/security/pwquality.conf
 # fix audit permissions
 #sudo chmod 0655 /etc/audit
 #sudo chmod 0655 /etc/audit/*
@@ -91,7 +91,7 @@ sudo chmod 0640 /etc/shadow-
 # disable root ssh login - only required since root has to be an active account - not a CIS requirement
 #sudo sed -i "s#root:/bin/bash#root:/sbin/nologin#g" /etc/passwd
 # disable postfix - has_nonlocal_mta
-sudo update-rc.d postfix disable
+#sudo update-rc.d postfix disable
 
 #Set root password attributes
 echo '> Setting administrator password attributes post CIS Remediation...'
@@ -132,7 +132,7 @@ unset HISTFILE && history -c && rm -fr /root/.bash_history
 # Cleans SSH keys.
 echo '> Cleaning SSH keys ...'
 sudo rm -f /etc/ssh/ssh_host_*
-sudo systemctl disable ssh
+sudo systemctl disable sshd
 
 # Enable RC.Local Service
 echo '> Enable rc-local Service...'
