@@ -17,7 +17,6 @@ tanzu package install contour --package-name contour.community.tanzu.vmware.com 
 
 # Install Harbor
 echo '> Preparing for Harbor Registry...'
-#curl -LO "https://raw.githubusercontent.com/vmware-tanzu/community-edition/main/addons/packages/harbor/${HARBOR_PACKAGE_VERSION}/bundle/config/values.yaml"
 echo '> Downloading Harbor Registry files...'
 image_url=$(kubectl get packages harbor.community.tanzu.vmware.com.${HARBOR_PACKAGE_VERSION} -o jsonpath='{.spec.template.spec.fetch[0].imgpkgBundle.image}')
 imgpkg pull -b $image_url -o /tmp/harbor-package
