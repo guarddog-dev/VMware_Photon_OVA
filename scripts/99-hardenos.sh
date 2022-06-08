@@ -1,5 +1,6 @@
 #!/bin/bash
 # harden appliance
+echo '> Hardening Appliance...'
 
 # Set SSHD Ciphers
 sudo echo "ciphers aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr" >> /etc/ssh/sshd_config
