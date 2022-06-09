@@ -42,16 +42,6 @@ sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
 echo "> Cleaning up Directory..."
 sudo rm *
 
-<<com
-#Install K9s
-echo "> Installing K9s Utility..."
-sudo snap install k9s
-
-#Validate K9s
-echo "> Validating K9s version..."
-k9s version
-com
-
 #Set up Kubecolor permanent Alias
 echo  '> Setting up Kubecolor permanent alias...'
 cat <<EOF >> 00-aliases
