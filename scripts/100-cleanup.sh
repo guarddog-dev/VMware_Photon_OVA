@@ -12,6 +12,10 @@ echo '> Cleaning up Tanzu Installation Binaries ...'
 sudo rm -r /tanzu/tce-linux-amd64-${tanzutce_version}/*
 sudo rmdir /tanzu/tce-linux-amd64-${tanzutce_version}
 
+# Save IPTables Config
+echo '> Saving IPTables Config ...'
+sudo iptables-save
+
 # Update
 echo '> Updating all Binaries ...'
 tdnf -y update photon-repos
@@ -75,7 +79,7 @@ echo '> Setting Security best practices...'
 #sudo chmod 0655 /etc/audit
 #sudo chmod 0655 /etc/audit/*
 # postfix_network_listening_disabled
-sudo sed -i "s/inet_interfaces = all/inet_interfaces = loopback-only/g" /etc/postfix/main.cf
+#sudo sed -i "s/inet_interfaces = all/inet_interfaces = loopback-only/g" /etc/postfix/main.cf
 # fix audit permissions file access
 #sudo chmod 0655 /etc/audit/*
 # fix shadow file permissions access

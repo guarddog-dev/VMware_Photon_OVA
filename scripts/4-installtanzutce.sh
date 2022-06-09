@@ -32,3 +32,10 @@ sudo rm /tanzu/tce-linux-amd64-$tanzutce_version.tar.gz
 #Found bug. Created Bug report: https://github.com/vmware-tanzu/community-edition/issues/3758
 echo -e '> Setting up Auto Complete permanently for Tanzu...'
 source <(tanzu completion bash)
+
+#Open Ports
+echo -e '> Opening standard Tanzu Ports...'
+sudo iptables -I INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+sudo iptables -I INPUT -p tcp -m tcp --dport 8080 -j ACCEPT
+sudo iptables -I INPUT -p tcp -m tcp --dport 443 -j ACCEPT
+sudo iptables-save
