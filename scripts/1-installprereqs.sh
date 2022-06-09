@@ -47,10 +47,10 @@ echo '> Creating directory for setup/startup scripts...'
 mkdir -p /${USERD}/setup
 
 #create standard user
-echo '> Creating User stduser...'
-useradd -m -g sudo stduser
-usermod -aG docker stduser
-STD_PASSWORD="VMware123!"
-echo "stduser:${STD_PASSWORD}" | /usr/sbin/chpasswd
-sudo mkdir /tanzu
-sudo chown stduser: /tanzu
+#echo '> Creating User stduser...'
+#useradd -m -g sudo stduser
+#usermod -aG docker stduser
+#STD_PASSWORD="VMware123!"
+#echo "stduser:${STD_PASSWORD}" | /usr/sbin/chpasswd
+#sudo mkdir /tanzu
+#sudo chown stduser: /tanzu
