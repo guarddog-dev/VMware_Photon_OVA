@@ -57,6 +57,13 @@ tanzu package install harbor \
    --package-name harbor.community.tanzu.vmware.com \
    --version ${HARBOR_PACKAGE_VERSION} \
    --values-file harbor-values.yaml
+   
+# Get Info
+kubectl get apps
+kubectl get httpproxy -A 
+kubectl get svc -A
+
+
 
 #Open Ports
 echo -e '> Opening standard Harbor Ports...'

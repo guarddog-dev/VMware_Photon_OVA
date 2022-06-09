@@ -13,8 +13,8 @@ sudo rm -r /tanzu/tce-linux-amd64-${tanzutce_version}/*
 sudo rmdir /tanzu/tce-linux-amd64-${tanzutce_version}
 
 # Save IPTables Config
-echo '> Saving IPTables Config ...'
-sudo iptables-save
+#echo '> Saving IPTables Config ...'
+#sudo iptables-save
 
 # Update
 echo '> Updating all Binaries ...'
