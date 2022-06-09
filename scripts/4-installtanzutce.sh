@@ -34,8 +34,8 @@ echo -e '> Setting up Auto Complete permanently for Tanzu...'
 source <(tanzu completion bash)
 
 #Open Ports
-echo -e '> Opening standard Tanzu Ports...'
-sudo iptables -I INPUT -p tcp -m tcp --dport 80 -j ACCEPT
-sudo iptables -I INPUT -p tcp -m tcp --dport 8080 -j ACCEPT
-sudo iptables -I INPUT -p tcp -m tcp --dport 443 -j ACCEPT
-sudo iptables-save
+#echo -e '> Opening standard Tanzu Ports...'
+#sudo iptables -I INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+#sudo iptables -I INPUT -p tcp -m tcp --dport 8080 -j ACCEPT
+#sudo iptables -I INPUT -p tcp -m tcp --dport 443 -j ACCEPT
+#sudo iptables-save
