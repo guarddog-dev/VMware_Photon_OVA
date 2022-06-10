@@ -32,7 +32,7 @@ fi
 echo -e "\e[92m  Enabling ICMP ..." > /dev/console
 sudo iptables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
 sudo iptables -A OUTPUT -p icmp --icmp-type echo-reply -j ACCEPT
-sudo sh -c "iptables-save > /etc/iptables.rules"
+sudo iptables-save > /etc/systemd/scripts/ip4save
 
 # Set User Password
 echo -e "\e[92m  Configuring OS $USERD password ..." > /dev/console
