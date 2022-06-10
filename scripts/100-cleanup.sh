@@ -13,8 +13,8 @@ sudo rm -r /tanzu/tce-linux-amd64-${tanzutce_version}/*
 sudo rmdir /tanzu/tce-linux-amd64-${tanzutce_version}
 
 # Save IPTables Config
-#echo '> Saving IPTables Config ...'
-#sudo iptables-save
+echo '> Saving IPTables Config ...'
+sudo iptables-save > /etc/systemd/scripts/ip4save
 
 # Update
 echo '> Updating all Binaries ...'
@@ -59,7 +59,8 @@ sudo ln -s /etc/machine-id /var/lib/dbus/machine-id
 
 # Clearing History File
 echo '> Clearing History File...'
-sudo unset HISTFILE && sudo history -c && sudo rm -fr /${USERD}/.bash_history
+sudo history -c
+sudo rm -fr /${USERD}/.bash_history
 
 # Clean Log Files
 echo '> Removing Log files...'
