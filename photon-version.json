@@ -1,7 +1,7 @@
 {
   "version": "0.12.1",
   "description": "GuardDog AI Photon Tanzu TCE Appliance",
-  "vm_name": "photontce.guarddog.lab",
+  "vm_name": "photontce-template.guarddog.lab",
   "iso_checksum": "2bb1f61d6809835a9562767d947612c4",
   "iso_url": "https://packages.vmware.com/photon/4.0/Rev2/iso/photon-minimal-4.0-c001795b8.iso",
   "numvcpus": "4",
