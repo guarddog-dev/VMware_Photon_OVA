@@ -8,12 +8,14 @@ tanzutce_version="v0.12.1"
 #Download Tanzue Community Edition
 #export RELEASE=$(curl -s https://github.com/vmware-tanzu/community-edition/releases/latest | grep tag/ | cut -d '/' -f 8 | cut -d '"' -f 1)
 echo "> Downloading Release Version $tanzutce_version..."
+mkdir /tanzu
 cd /tanzu
 wget https://github.com/vmware-tanzu/community-edition/releases/download/$tanzutce_version/tce-linux-amd64-$tanzutce_version.tar.gz
 
 #Extract Tanzu Installer
 echo "> Extracting Tanzu Community Edition: Build $tanzutce_version..."
 sudo tar xzvf tce-linux-amd64-${tanzutce_version}.tar.gz
+#sleep 20s
 
 #Install Tanzu
 echo "> Installing Tanzu Community Edition Binary: Build $tanzutce_version..."
@@ -34,8 +36,8 @@ echo -e '> Setting up Auto Complete permanently for Tanzu...'
 source <(tanzu completion bash)
 
 #Open Ports
-#echo -e '> Opening standard Tanzu Ports...'
-#sudo iptables -I INPUT -p tcp -m tcp --dport 80 -j ACCEPT
-#sudo iptables -I INPUT -p tcp -m tcp --dport 8080 -j ACCEPT
-#sudo iptables -I INPUT -p tcp -m tcp --dport 443 -j ACCEPT
-#sudo iptables-save
+echo -e '> Opening standard Tanzu Ports...'
+sudo iptables -I INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+sudo iptables -I INPUT -p tcp -m tcp --dport 8080 -j ACCEPT
+sudo iptables -I INPUT -p tcp -m tcp --dport 443 -j ACCEPT
+sudo iptables-save > /etc/systemd/scripts/ip4save
