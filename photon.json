@@ -144,8 +144,13 @@
     },
     {
       "type": "file",
-      "source": "files/make_um_and_deploy_harbor_registry.sh",
-      "destination": "/tanzu/make_um_and_deploy_harbor_registry.sh"
+      "source": "files/make-um-and-deploy-harbor-registry.sh",
+      "destination": "/tanzu/make-um-and-deploy-harbor-registry.sh"
+    },
+    {
+      "type": "file",
+      "source": "files/make-um-and-deploy-velero.sh",
+      "destination": "/tanzu/make-um-and-deploy-velero.sh"
     }
   ],
   "post-processors": [
