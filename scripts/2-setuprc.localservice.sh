@@ -47,7 +47,7 @@ sudo echo '#Configure Issues File for Boot Info' >> rclocal
 sudo echo 'sudo chown $USERD:root /etc/issue' >> rclocal
 sudo echo 'sudo chmod 644 /etc/issue' >> rclocal
 sudo echo 'PREFIX="Welcome to GuardDog AI Security"' >> rclocal
-sudo echo 'BOOTTIME=$(uptime -s)' >> rclocal
+sudo echo 'BOOTTIME=$(date)' >> rclocal
 sudo echo 'HOSTM=$(hostname)' >> rclocal
 sudo echo 'IFACE=eth0'  >> rclocal
 sudo echo 'IPADDRS=$(ip a s $IFACE | egrep -o "inet [0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}" | cut -d" " -f2)'  >> rclocal
