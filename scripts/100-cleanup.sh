@@ -5,7 +5,6 @@
 USERD="root"
 tanzutce_version="v0.12.1"
 
-
 # Clean up Tanzu Installation Binaries
 echo '> Cleaning up Tanzu Installation Binaries ...'
 #export RELEASE=$(curl -s https://github.com/vmware-tanzu/community-edition/releases/latest | grep tag/ | cut -d '/' -f 8 | cut -d '"' -f 1)
@@ -70,33 +69,11 @@ sudo find /var/log -type f -delete
 sudo rm -rf /var/log/journal/*
 sudo rm -f /var/lib/dhcp/*
 
-# Fix Configuration issues post CIS Remediation
+# Set Security best practices
 echo '> Setting Security best practices...'
-#sudo chmod u=rw,g=r,o=r /etc/security/pwquality.conf
-#sudo mv /etc/security/pwquality.conf /${USERD}/setup/pwquality.conf
-#sudo tdnf install libpwquality -y
-#sudo mv /${USERD}/setup/pwquality.conf /etc/security/pwquality.conf
-# fix audit permissions
-#sudo chmod 0655 /etc/audit
-#sudo chmod 0655 /etc/audit/*
-# postfix_network_listening_disabled
-#sudo sed -i "s/inet_interfaces = all/inet_interfaces = loopback-only/g" /etc/postfix/main.cf
-# fix audit permissions file access
-#sudo chmod 0655 /etc/audit/*
-# fix shadow file permissions access
 sudo chmod 0640 /etc/shadow
-# fix shadow backup file permissions access
 sudo chmod 0640 /etc/shadow-
-# set root password (required for single user mode access)
-#THE_ROOT_PASSWORD='Gu@RdD0gRo^k$!'
-#echo "root:${THE_ROOT_PASSWORD}" | sudo /usr/sbin/chpasswd
-# set root account timeouts
-#sudo chage -M 5 root
-#sudo chage -m 1 root
-# disable root ssh login - only required since root has to be an active account - not a CIS requirement
-#sudo sed -i "s#root:/bin/bash#root:/sbin/nologin#g" /etc/passwd
-# disable postfix - has_nonlocal_mta
-#sudo update-rc.d postfix disable
+
 
 #Set root password attributes
 echo '> Setting administrator password attributes post CIS Remediation...'
@@ -132,7 +109,8 @@ sudo rm /etc/security/opasswd.old
 
 # Clear History file
 echo '> Clearing History File...'
-unset HISTFILE && history -c && rm -fr /root/.bash_history
+history -c
+sudo rm -fr /root/.bash_history
 
 # Cleans SSH keys.
 echo '> Cleaning SSH keys ...'
