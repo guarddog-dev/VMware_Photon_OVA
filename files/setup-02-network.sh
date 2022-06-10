@@ -93,6 +93,7 @@ sudo sed -ie "/[[:space:]]localhost/d" /${USERD}/setup/hosts
 sudo echo "127.0.0.1 $HOSTNAME $SHORTNAME" >> /${USERD}/setup/hosts
 sudo mv /${USERD}/setup/hosts /etc/hosts
 sudo hostnamectl set-hostname ${HOSTNAME}
+sudo rm /${USERD}/setup/hostse
 
 #Restart Services
 echo -e "\e[92mRestarting Network ..." > /dev/console
@@ -142,4 +143,8 @@ then
 	echo -e "\e[92m  Syslog not configured. Disabling Remote Syslog ..." > /dev/console
 	sudo systemctl disable rsyslog
 	sudo systemctl stop rsyslog
-fi  
+fi
+
+# Save IPTables Config
+echo "\e[92m  Saving IPTables Config ..." > /dev/console
+sudo iptables-save > /etc/systemd/scripts/ip4save
