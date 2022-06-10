@@ -146,5 +146,5 @@ then
 fi
 
 # Save IPTables Config
-echo "\e[92m  Saving IPTables Config ..." > /dev/console
+echo -e "\e[92m  Saving IPTables Config ..." > /dev/console
 sudo iptables-save > /etc/systemd/scripts/ip4save
