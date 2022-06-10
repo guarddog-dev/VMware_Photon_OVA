@@ -136,6 +136,16 @@
       "type": "file",
       "source": "files/site.conf",
       "destination": "/etc/rear/site.conf"
+    },
+    {
+      "type": "file",
+      "source": "files/make-tce-mgmt-cluster.sh",
+      "destination": "/tanzu/make-tce-mgmt-cluster.sh"
+    },
+    {
+      "type": "file",
+      "source": "files/make_um_and_deploy_harbor_registry.sh",
+      "destination": "/tanzu/make_um_and_deploy_harbor_registry.sh"
     }
   ],
   "post-processors": [
