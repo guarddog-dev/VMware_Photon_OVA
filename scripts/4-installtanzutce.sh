@@ -34,6 +34,9 @@ sudo rm /tanzu/tce-linux-amd64-$tanzutce_version.tar.gz
 #Found bug. Created Bug report: https://github.com/vmware-tanzu/community-edition/issues/3758
 echo -e '> Setting up Auto Complete permanently for Tanzu...'
 source <(tanzu completion bash)
+echo 'source /usr/share/bash-completion/bash_completion' >>~/.bashrc
+mkdir /etc/bash_completion.d
+/usr/local/bin/tanzu completion bash >/etc/bash_completion.d/tanzu
 
 #Open Ports
 echo -e '> Opening standard Tanzu Ports...'
