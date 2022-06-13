@@ -151,6 +151,11 @@
       "type": "file",
       "source": "files/make-um-and-deploy-velero.sh",
       "destination": "/tanzu/make-um-and-deploy-velero.sh"
+    },
+    {
+      "type": "file",
+      "source": "files/make-um-and-deploy-prometheus-grafana.sh",
+      "destination": "/tanzu/make-um-and-deploy-prometheus-grafana.sh"
     }
   ],
   "post-processors": [
