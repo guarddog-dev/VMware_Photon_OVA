@@ -15,7 +15,7 @@ PROMETHEUS_PACKAGE_VERSION="2.27.0-1"
 #Version of Grafana to install
 GRAFANA_PACKAGE_VERSION="7.5.11"
 #Internal Domain name
-DOMAIN_NAME="guarddog.lab"
+DOMAIN_NAME=$(echo $HOSTNAME | cut -d '.' -f 2-3)
 #Internal DNS Entry to that resolves to the prometheus fqdn - you must make this DNS Entry
 PROMETHEUS_FQDN="prometheus.${DOMAIN_NAME}"
 #Internal DNS Entry to that resolves to the grafana fqdn - you must make this DNS Entry
@@ -275,9 +275,9 @@ echo "You can now access the Prometheus at:"
 echo "					     https://$PROMETHEUS_FQDN"
 echo "You can now access the Grafana at:"
 echo "					  https://$GRAFANA_FQDN"
-echo "username: admin"
-echo "password: $GRAFANA_ADMIN_PASSWORD"
+echo "Grafana Username: admin"
+echo "Grafana Password: $GRAFANA_ADMIN_PASSWORD"
 echo "Note you must either have a DNS A record in your DNS or a /etc/host entry added for the hostname $PROMETHEUS_FQDN and $GRAFANA_FQDN pointing to the external IP of your Tanzu Kubernetes Cluster"
 echo "Prometheus website & documentation can be found here: https://prometheus.io"
 echo "Grafana website & documentation can be found here: https://grafana.com"
-
+sleep 60s

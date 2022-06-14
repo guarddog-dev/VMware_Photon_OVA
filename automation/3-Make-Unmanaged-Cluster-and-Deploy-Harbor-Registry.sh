@@ -3,10 +3,21 @@
 echo '> Preparing for Harbor Registry...'
 
 # Versions
+#Version of Cert Manager to install
 CERT_MANAGER_PACKAGE_VERSION=1.8.0
+#Version of Contour/Envoy to install
 CONTOUR_PACKAGE_VERSION=1.20.1
+#Version of Harbor to install
 HARBOR_PACKAGE_VERSION=2.4.2
+#Harbor Admin Password
+HARBOR_ADMIN_PASSWORD="VMware12345!"
+#Internal Domain name
+DOMAIN_NAME=$(echo $HOSTNAME | cut -d '.' -f 2-3)
+#Internal DNS Entry to that resolves to the harbor fqdn - you must make this DNS Entry
+HARBOR_FQDN="harbor.${DOMAIN_NAME}"
+#Tanzu/Kubernetes cluster name
 CLUSTER_NAME='local-cluster'
+#Control Plane Name
 CONTROL_PLANE="$CLUSTER_NAME"-control-plane
 
 # Create Unmanaged Cluster
@@ -120,15 +131,13 @@ cp /tmp/harbor-package/config/scripts/generate-passwords.sh .
 echo '> Generating Secrets/Passwords for Harbor-values.yaml file...'
 bash generate-passwords.sh harbor-values.yaml
 #set harbor initial password
-#echo '> Setting Harbor Admin password to VMware123! in Harbor-values.yaml file...'
-HARBOR_ADMIN_PASSWORD="Harbor12345"
 sudo sed -i "s/harborAdminPassword:.*/harborAdminPassword: ${HARBOR_ADMIN_PASSWORD}/g" harbor-values.yaml
 SET_HARBOR_ADMIN_PASSWORD=$(less harbor-values.yaml | grep harborAdminPassword)
 echo "Harbor Admin Password will be $SET_HARBOR_ADMIN_PASSWORD"
 echo '> Removing comments in Harbor-values.yaml file...'
 yq -i eval '... comments=""' harbor-values.yaml
 #echo '> Setting Hostname Harbor-values.yaml file...'
-sudo sed -i "s/harbor.yourdomain.com/${HOSTNAME}/g" harbor-values.yaml
+sudo sed -i "s/harbor.yourdomain.com/${HARBOR_FQDN}/g" harbor-values.yaml
 echo '> Updating /etc/hosts with harbor info...'
 echo "$IPADDRS harbor.yourdomain.com notary.harbor.yourdomain.com" >> /etc/hosts
 echo '> Installing Harbor Registry...'
@@ -154,18 +163,9 @@ echo "$PNAME $CSTATUS"
 clear
 HARBOR_PORT=$(less harbor-values.yaml | grep "  https:" | cut -d ':' -f 2 | cut -d ' ' -f2)
 echo "You can now access the Harbor Registry at:"
-echo "https://$HOSTNAME:$HARBOR_PORT"
-echo "username: admin"
-echo "password: $HARBOR_ADMIN_PASSWORD"
-echo "Note you must either have a DNS A record in your DNS or a /etc/host entry added for the hostname $HOSTNAME"
+echo "						  https://$HARBOR_FQDN"
+echo "Harbor Username: admin"
+echo "Harbor Password: $HARBOR_ADMIN_PASSWORD"
+echo "Note you must either have a DNS A record in your DNS or a /etc/host entry added for the hostname $HARBOR_FQDN"
 echo "Harbor website & documentation can be found here: https://goharbor.io"
-
-<<com
-#Open Ports
-echo -e '> Opening standard Harbor Ports via iptables...'
-sudo iptables -I INPUT -p tcp -m tcp --dport 4318 -j ACCEPT
-sudo iptables -I INPUT -p tcp -m tcp --dport 14268 -j ACCEPT
-sudo iptables -I INPUT -p tcp -m tcp --dport 8001 -j ACCEPT
-sudo iptables -I INPUT -p tcp -m tcp --dport 443 -j ACCEPT
-sudo iptables-save
-com
+sleep 60s

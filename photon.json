@@ -139,23 +139,8 @@
     },
     {
       "type": "file",
-      "source": "files/make-tce-mgmt-cluster.sh",
-      "destination": "/tanzu/make-tce-mgmt-cluster.sh"
-    },
-    {
-      "type": "file",
-      "source": "files/make-um-and-deploy-harbor-registry.sh",
-      "destination": "/tanzu/make-um-and-deploy-harbor-registry.sh"
-    },
-    {
-      "type": "file",
-      "source": "files/make-um-and-deploy-velero.sh",
-      "destination": "/tanzu/make-um-and-deploy-velero.sh"
-    },
-    {
-      "type": "file",
-      "source": "files/make-um-and-deploy-prometheus-grafana.sh",
-      "destination": "/tanzu/make-um-and-deploy-prometheus-grafana.sh"
+      "source": "automation/",
+      "destination": "/root/automation"
     }
   ],
   "post-processors": [

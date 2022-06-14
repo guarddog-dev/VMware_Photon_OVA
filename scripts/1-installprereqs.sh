@@ -45,3 +45,4 @@ usermod -aG sudo root
 #Create directory for setup scripts
 echo '> Creating directory for setup/startup scripts...'
 mkdir -p /${USERD}/setup
+mkdir -p /${USERD}/automation
