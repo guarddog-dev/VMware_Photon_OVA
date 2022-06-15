@@ -124,13 +124,18 @@
     },
     {
       "type": "file",
-      "source": "files/setup-01-os.sh",
-      "destination": "/root/setup/setup-01-os.sh"
+      "source": "files/1-setup-os.sh",
+      "destination": "/root/setup/1-setup-os.sh"
     },
     {
       "type": "file",
-      "source": "files/setup-02-network.sh",
-      "destination": "/root/setup/setup-02-network.sh"
+      "source": "files/2-setup-network.sh",
+      "destination": "/root/setup/2-setup-network.sh"
+    },
+    {
+      "type": "file",
+      "source": "files/3-setup-automation.sh",
+      "destination": "/root/setup/3-setup-automation.sh"
     },
     {
       "type": "file",

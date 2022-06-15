@@ -33,6 +33,7 @@ then
 				SYSLOG_DESTINATION=$(/${USERD}/setup/getOvfProperty.py "guestinfo.syslogdestination")
 				SYSLOG_PORT=$(/${USERD}/setup/getOvfProperty.py "guestinfo.syslogport")
 				SYSLOG_PROTOCOL=$(/${USERD}/setup/getOvfProperty.py "guestinfo.syslogprotocol")
+				AUTOMATION_SELECTION=$(/${USERD}/setup/getOvfProperty.py "guestinfo.automation")
 			else
 				echo -e "\e[92mVM Guest Info Detected. Configuring for VMware using DHCP IP..." > /dev/console
 				HOSTNAME=$(/${USERD}/setup/getOvfProperty.py "guestinfo.hostname")
@@ -49,6 +50,7 @@ then
 				SYSLOG_DESTINATION=$(/${USERD}/setup/getOvfProperty.py "guestinfo.syslogdestination")
 				SYSLOG_PORT=$(/${USERD}/setup/getOvfProperty.py "guestinfo.syslogport")
 				SYSLOG_PROTOCOL=$(/${USERD}/setup/getOvfProperty.py "guestinfo.syslogprotocol")
+				AUTOMATION_SELECTION=$(/${USERD}/setup/getOvfProperty.py "guestinfo.automation")
 			fi
 		fi
 	fi
@@ -72,6 +74,7 @@ then
 		SYSLOG_DESTINATION=""
 		SYSLOG_PORT=""
 		SYSLOG_PROTOCOL=""
+		AUTOMATION_SELECTION=""
 		
 		: '
 		clear
@@ -154,15 +157,16 @@ else
 	echo -e "\e[92mStarting Customization ..." > /dev/console
 
 	echo -e "\e[92mStarting OS Configuration ..." > /dev/console
-	. /${USERD}/setup/setup-01-os.sh
+	. /${USERD}/setup/1-setup-os.sh
 	sleep 20
 	
 	echo -e "\e[92mStarting Network Configuration ..." > /dev/console
-	. /${USERD}/setup/setup-02-network.sh
+	. /${USERD}/setup/2-setup-network.sh
 	sleep 20
 	
-	#echo -e "\e[92mStarting GuardDog Configuration ..." > /dev/console
-	#. /${USERD}/setup/setup-03-GuardDog.sh
+	echo -e "\e[92mStarting Automation Configuration ..." > /dev/console
+	. /${USERD}/setup/3-setup-automation.sh
+	sleep 20
 	
 	echo -e "\e[92mCustomization Completed ..." > /dev/console
 
