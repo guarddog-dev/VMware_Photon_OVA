@@ -18,7 +18,7 @@ then
 		then
 			if [[ ! -z "$IP_ADDRESS" ]];
 			then
-				echo -e "\e[92mVM Guest Info Detected. Configuring for VMware using Static IP..." > /dev/console
+				echo -e "\e[92mVM Guest Info Detected. Configuring for VMware using Static IP ..." > /dev/console
 				HOSTNAME=$(/${USERD}/setup/getOvfProperty.py "guestinfo.hostname")
 				IP_ADDRESS=$(/${USERD}/setup/getOvfProperty.py "guestinfo.ipaddress")
 				NETMASK=$(/${USERD}/setup/getOvfProperty.py "guestinfo.netmask" | awk -F ' ' '{print $1}')
@@ -35,7 +35,7 @@ then
 				SYSLOG_PROTOCOL=$(/${USERD}/setup/getOvfProperty.py "guestinfo.syslogprotocol")
 				AUTOMATION_SELECTION=$(/${USERD}/setup/getOvfProperty.py "guestinfo.automation")
 			else
-				echo -e "\e[92mVM Guest Info Detected. Configuring for VMware using DHCP IP..." > /dev/console
+				echo -e "\e[92mVM Guest Info Detected. Configuring for VMware using DHCP IP ..." > /dev/console
 				HOSTNAME=$(/${USERD}/setup/getOvfProperty.py "guestinfo.hostname")
 				IP_ADDRESS=""
 				NETMASK=""
@@ -164,7 +164,7 @@ else
 	. /${USERD}/setup/2-setup-network.sh
 	sleep 20
 	
-	echo -e "\e[92mStarting Automation Configuration ..." > /dev/console
+	echo -e "\e[92mStarting Automation ..." > /dev/console
 	. /${USERD}/setup/3-setup-automation.sh
 	sleep 20
 	
