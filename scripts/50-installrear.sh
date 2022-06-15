@@ -10,8 +10,7 @@ parted \
 diffutils \
 kbd \
 binutils \
-git \
-parted
+git
 
 # Install prereqs
 echo '> Installing Relax-and-Recover (rear)...'
