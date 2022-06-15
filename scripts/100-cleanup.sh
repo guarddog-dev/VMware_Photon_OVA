@@ -78,6 +78,7 @@ sudo chmod 0640 /etc/shadow-
 #Set root password attributes
 echo '> Setting administrator password attributes post CIS Remediation...'
 sudo chage -m 0 root
+sudo chage -M 365 root
 
 #List root password attributes
 echo '> Listing administrator password attributes post CIS Remediation...'
