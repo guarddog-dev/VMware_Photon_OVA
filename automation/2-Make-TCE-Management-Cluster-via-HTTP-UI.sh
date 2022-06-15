@@ -18,4 +18,4 @@ sudo iptables -I INPUT -p tcp -m tcp --dport 8080 -j ACCEPT #PhotonOS
 echo '> Starting Tanzu Management Cluster Web UI on $IPADDRS:8080...'
 echo '> Please one a web browser to  http://$IPADDRS:8080 to access the UI interface to get started...'
 #note: calico is added for Ubuntu OS
-tanzu management-cluster create --bind "$IPADDRS:8080" --ui --cni=calico
+tanzu management-cluster create --bind "$IPADDRS:8080" --ui
