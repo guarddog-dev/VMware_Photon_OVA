@@ -10,9 +10,11 @@ if [ ! -f /${USERD}/ran_customization ];
 then
 	# Extract all OVF Properties
 	VMTOOLSDSTATUS=$(systemctl show -p ActiveState vmtoolsd.service | sed 's/ActiveState=//g')
+	CHASSISTYPE=$(hostnamectl status | grep Chassis| cut -d ':' -f 2 | cut -d ' ' -f 2)
 	GUESTINFOTEST=$(/usr/bin/vmtoolsd --cmd 'info-get guestinfo.ovfEnv')
 	IP_ADDRESS=$(/${USERD}/setup/getOvfProperty.py "guestinfo.ipaddress")
-	if [ $VMTOOLSDSTATUS == "active" ]; 
+	#if [ $VMTOOLSDSTATUS == "active" ]; 
+	if [ $CHASSISTYPE == "vm" ];
 	then
 		if [[ ! -z "$GUESTINFOTEST" ]];
 		then
@@ -58,9 +60,9 @@ then
 	# If Guest Info does not exist ask user to fill out fields
 	if [ -z "$GUESTINFOTEST" ]; 
 	then
-		echo -e "\e[92mVMTools Guest Info not detected. Setting Baremetal for DHCP ..." > /dev/console
+		echo -e "\e[92mVMTools Guest Info not detected. Setting for DHCP ..." > /dev/console
 		RANN=$(( $RANDOM % 10000 + 1 ))
-		HOSTNAME="fido-$RANN.guarddog.ai"
+		HOSTNAME="photon-$RANN.guarddog.ai"
 		IP_ADDRESS=""
 		NETMASK=""
 		GATEWAY=""
