@@ -71,7 +71,7 @@ then
 		NTP_SERVER="0.pool.ntp.org"
 		FALLBACKNTP_SERVER="1.pool.ntp.org"
 		TIMEZONE="Etc/UTC"
-		ROOT_PASSWORD="Beta-Max12345!@#$%"
+		ROOT_PASSWORD="VMware12345!@#$%"
 		SSH_ENABLE="True"
 		SYSLOG_DESTINATION=""
 		SYSLOG_PORT=""
