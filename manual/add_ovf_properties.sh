@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# clean up just in case
+#rm -f photon.xml
+
 OUTPUT_PATH="../output-vmware-iso"
 OVF_PATH=$(find ${OUTPUT_PATH} -type f -iname ${PHOTON_APPLIANCE_NAME}.ovf -exec dirname "{}" \;)
 
@@ -12,7 +15,35 @@ fi
 
 rm -f ${OVF_PATH}/${PHOTON_APPLIANCE_NAME}.mf
 
-sed "s/{{VERSION}}/${PHOTON_VERSION}/g" ${PHOTON_OVF_TEMPLATE} > photon.xml
+#clone xml template
+cp photon.xml.template photon.xml
+
+<<com ##Not Working
+# Import list of Automation Shell Scripts into OVA Automation List
+echo "> Exporting Automation Shells Scripts to a list for OVA use..."
+#rm array_list.txt
+SCRIPTS_PATH="../automation"
+SCRIPT_LIST=$(ls $SCRIPTS_PATH | tr ' ' '.' | rev | cut -c 4- | rev)
+SCRIPT_ARRAY=( $SCRIPT_LIST )
+FIRST_SCRIPT=${SCRIPT_ARRAY[0]}
+BEG="&quot;"
+END="&quot;, "
+#output array to text file
+#touch array_list.txt
+for i in ${SCRIPT_ARRAY[@]}; do echo $BEG$i$END >> array_list.txt; done
+#remove comma from last line
+sed -i '$ s/.$//' array_list.txt
+#import txt as array
+readarray -t TEMP < array_list.txt
+#Echo array to single string list
+SCRIPTSLIST=$(echo ${TEMP[@]})
+perl -i -pe  "s/SCRIPTSLISTVAR/${SCRIPTSLIST}/g" photon.xml
+sed -i "s/FIRSTSCRIPTVAR/${FIRST_SCRIPT}/g" photon.xml
+rm array_list.txt
+com
+
+#update Photon Version Info
+sed -i "s/{{VERSION}}/${PHOTON_VERSION}/g" photon.xml
 
 if [ "$(uname)" == "Darwin" ]; then
     sed -i .bak1 's/<VirtualHardwareSection>/<VirtualHardwareSection ovf:transport="com.vmware.guestInfo">/g' ${OVF_PATH}/${PHOTON_APPLIANCE_NAME}.ovf
