@@ -139,6 +139,11 @@
     },
     {
       "type": "file",
+      "source": "files/resize.sh",
+      "destination": "/root/setup/resize.sh"
+    },
+    {
+      "type": "file",
       "source": "files/site.conf",
       "destination": "/etc/rear/site.conf"
     },
@@ -151,7 +156,7 @@
   "post-processors": [
     {
       "type": "shell-local",
-      "environment_vars": ["PHOTON_VERSION={{ user `version` }}", "PHOTON_APPLIANCE_NAME={{ user `vm_name` }}", "FINAL_PHOTON_APPLIANCE_NAME={{ user `vm_name` }}_{{user `version`}}", "PHOTON_OVF_TEMPLATE={{ user `photon_ovf_template` }}"],
+      "environment_vars": ["PHOTON_VERSION={{ user `version` }}", "PHOTON_APPLIANCE_NAME={{ user `vm_name` }}", "FINAL_PHOTON_APPLIANCE_NAME={{ user `vm_final_name` }}-{{user `version`}}", "PHOTON_OVF_TEMPLATE={{ user `photon_ovf_template` }}"],
       "inline": [
         "cd manual",
         "./add_ovf_properties.sh"

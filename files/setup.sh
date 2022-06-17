@@ -170,6 +170,10 @@ else
 	#. /${USERD}/setup/3-setup-automation.sh
 	#sleep 20
 	
+	echo -e "\e[92mResizing Partition (if needed) ..." > /dev/console
+	. /${USERD}/setup/resize.sh /dev/sda 3
+	sleep 20
+	
 	echo -e "\e[92mCustomization Completed ..." > /dev/console
 
 	# Clear guestinfo.ovfEnv
