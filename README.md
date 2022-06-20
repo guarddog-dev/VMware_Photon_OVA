@@ -27,7 +27,7 @@ Note: Do not put any capital letters in the name of the VM if you change the vm 
 
 >Get-AdvancedSetting -Name Net.GuestIPHack -Entity $VMHOST
 
->Set-AdvancedSetting -Name Net.GuestIPHack -Value 1 -Entity $VMHOST
+>Get-AdvancedSetting -Name Net.GuestIPHack -Entity $VMHOST| Set-AdvancedSetting -Value 1
 
 >Get-AdvancedSetting -Name Net.GuestIPHack -Entity $VMHOST
 
