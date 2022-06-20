@@ -15,7 +15,7 @@ Note: Do not put any capital letters in the name of the VM if you change the vm 
 #### CLI Method:
 >esxcli system settings advanced set -o /Net/GuestIPHack -i 1
 #### PowerCLI Method:
->pswd #only needed for MacOS or Linux
+>pwsh #only needed for MacOS or Linux
 
 >$VMHOST = Read-Host "Please input the IP or FQDN of your ESXi Host"
 
