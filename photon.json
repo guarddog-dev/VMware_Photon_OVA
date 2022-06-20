@@ -2,7 +2,7 @@
   "min_packer_version": "1.7.0",
   "variables": {
     "photon_ovf_template": "photon.xml.template",
-    "ovftool_deploy_vcenter": "172.26.4.25",
+    "ovftool_deploy_vcenter": "10.10.0.100",
     "ovftool_deploy_vcenter_username": "administrator@vsphere.local",
     "ovftool_deploy_vcenter_password": "Beta-Max1!"
   },
