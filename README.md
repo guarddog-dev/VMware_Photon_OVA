@@ -42,7 +42,7 @@ https://developer.vmware.com/web/tool/4.4.0/ovf
 #### Install ovftool
 >sudo ./VMware-ovftool-4.4.3-18663434-lin.x86_64.bundle
 #### install Packer
->sudo apt-get install -y packer
+https://learn.hashicorp.com/tutorials/packer/get-started-install-cli
 #### install powershell
 https://docs.microsoft.com/en-us/powershell/scripting/install/install-ubuntu?view=powershell-7.2
 #### install git-all
