@@ -37,10 +37,6 @@ Note: Do not put any capital letters in the name of the VM if you change the vm 
 #### Due to requirements, it is recommended to build this OVA from a Ubuntu Linux desktop with a GUI.
 #### Download the ovftool from VMware Developer (get the lastest version). This will require a standard browser like Firefox or Chromium.
 https://developer.vmware.com/web/tool/4.4.0/ovf
-#### Extract
->sudo ./VMware-ovftool-4.4.3-18663434-lin.x86_64.bundle --extract ovftool && cd ovftool
-#### Unzip
->sudo unzip VMware-ovftool-4.4.3-18663434-lin.x86_64.bundle
 #### setup scripting to be runable
 >chmod a+x VMware-ovftool-4.4.3-18663434-lin.x86_64.bundle
 #### Install ovftool
