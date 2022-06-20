@@ -48,7 +48,7 @@ https://developer.vmware.com/web/tool/4.4.0/ovf
 #### install Packer
 >sudo apt-get install -y packer
 #### install powershell
->sudo apt-get install -y powershell
+https://docs.microsoft.com/en-us/powershell/scripting/install/install-ubuntu?view=powershell-7.2
 #### install git-all
 >sudo apt install -y git-all
 >git --version
