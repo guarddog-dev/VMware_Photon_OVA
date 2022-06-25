@@ -4,7 +4,7 @@
     "photon_ovf_template": "photon.xml.template",
     "ovftool_deploy_vcenter": "10.10.0.100",
     "ovftool_deploy_vcenter_username": "administrator@vsphere.local",
-    "ovftool_deploy_vcenter_password": "Beta-Max1!"
+    "ovftool_deploy_vcenter_password": "VMware1!"
   },
   "builders": [
     {
