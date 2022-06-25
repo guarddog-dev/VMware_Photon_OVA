@@ -83,4 +83,9 @@ WARNING: Using this option will result in a less than
 fully secure installation.
             </Description>
         </Property>
+      <Category>Automation</Category>
+        <Property ovf:key="guestinfo.automation" ovf:qualifiers="ValueMap{SCRIPTSLISTVAR}" ovf:type="string" ovf:userConfigurable="true" ovf:value="FIRSTSCRIPTVAR" ovf:required="true">
+        <Label>Tanzu Community Edition Automation</Label>
+          <Description>Select the automation task that is right for you.</Description>
+        </Property>
     </ProductSection>

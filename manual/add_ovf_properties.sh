@@ -18,7 +18,6 @@ rm -f ${OVF_PATH}/${PHOTON_APPLIANCE_NAME}.mf
 #clone xml template
 cp photon.xml.template photon.xml
 
-<<com ##Not Working
 # Import list of Automation Shell Scripts into OVA Automation List
 echo "> Exporting Automation Shells Scripts to a list for OVA use..."
 #rm array_list.txt
@@ -40,7 +39,6 @@ SCRIPTSLIST=$(echo ${TEMP[@]})
 perl -i -pe  "s/SCRIPTSLISTVAR/${SCRIPTSLIST}/g" photon.xml
 sed -i "s/FIRSTSCRIPTVAR/${FIRST_SCRIPT}/g" photon.xml
 rm array_list.txt
-com
 
 #update Photon Version Info
 sed -i "s/{{VERSION}}/${PHOTON_VERSION}/g" photon.xml

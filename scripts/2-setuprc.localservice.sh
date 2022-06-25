@@ -28,6 +28,7 @@ sudo echo ' TimeoutSec=0' >> rc-local
 sudo echo ' StandardOutput=tty' >> rc-local
 sudo echo ' RemainAfterExit=yes' >> rc-local
 sudo echo ' SysVStartPriority=99' >> rc-local
+sudo echo ' Environment=HOME=/root' >> rc-local
 sudo echo ' ' >> rc-local
 sudo echo '[Install]' >> rc-local
 sudo echo ' WantedBy=multi-user.target' >> rc-local

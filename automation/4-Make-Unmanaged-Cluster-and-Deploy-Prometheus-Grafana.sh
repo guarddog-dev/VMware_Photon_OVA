@@ -25,7 +25,7 @@ GRAFANA_ADMIN_PASSWORD="VMware12345!"
 #Tanzu/Kubernetes cluster name
 CLUSTER_NAME='local-cluster'
 #Control Plane Name
-CONTROL_PLANE="$CLUSTER_NAME"-control-plane		
+CONTROL_PLANE="$CLUSTER_NAME"-control-plane
 
 # Create Unmanaged Cluster
 echo "> Creating Unmanaged Cluster $CLUSTER_NAME..."
