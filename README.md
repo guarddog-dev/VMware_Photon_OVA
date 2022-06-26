@@ -70,3 +70,6 @@ The most common problem I have run into is not having enough wait time set for t
 
 ## Reference Website info on Packer for VMware
 https://packer.io/plugins/builders/vmware/iso
+
+## Framework from this project came from William Lam's Harbor project. You can find it here:
+https://github.com/lamw/harbor-appliance
