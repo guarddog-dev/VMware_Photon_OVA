@@ -35,6 +35,7 @@ then
 				SYSLOG_DESTINATION=$(/${USERD}/setup/getOvfProperty.py "guestinfo.syslogdestination")
 				SYSLOG_PORT=$(/${USERD}/setup/getOvfProperty.py "guestinfo.syslogport")
 				SYSLOG_PROTOCOL=$(/${USERD}/setup/getOvfProperty.py "guestinfo.syslogprotocol")
+				##Comment out for no automation
 				AUTOMATION_SELECTION=$(/${USERD}/setup/getOvfProperty.py "guestinfo.automation")
 			else
 				echo -e "\e[92mVM Guest Info Detected. Configuring for VMware using DHCP IP ..." > /dev/console
@@ -52,6 +53,7 @@ then
 				SYSLOG_DESTINATION=$(/${USERD}/setup/getOvfProperty.py "guestinfo.syslogdestination")
 				SYSLOG_PORT=$(/${USERD}/setup/getOvfProperty.py "guestinfo.syslogport")
 				SYSLOG_PROTOCOL=$(/${USERD}/setup/getOvfProperty.py "guestinfo.syslogprotocol")
+				##Comment out for no automation
 				AUTOMATION_SELECTION=$(/${USERD}/setup/getOvfProperty.py "guestinfo.automation")
 			fi
 		fi
@@ -76,6 +78,7 @@ then
 		SYSLOG_DESTINATION=""
 		SYSLOG_PORT=""
 		SYSLOG_PROTOCOL=""
+		##Comment out for no automation
 		AUTOMATION_SELECTION=""
 		
 		: '
@@ -166,8 +169,9 @@ else
 	. /${USERD}/setup/2-setup-network.sh
 	sleep 20
 	
+	##Comment out for no automation
 	echo -e "\e[92mStarting Automation ..." > /dev/console
-	. /${USERD}/setup/3-setup-automation.sh
+	. /${USERD}/setup/3-setup-automation.sh 
 	sleep 20
 	
 	echo -e "\e[92mResizing Partition (if needed) ..." > /dev/console

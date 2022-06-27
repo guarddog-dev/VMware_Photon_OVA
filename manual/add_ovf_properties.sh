@@ -18,6 +18,7 @@ rm -f ${OVF_PATH}/${PHOTON_APPLIANCE_NAME}.mf
 #clone xml template
 cp photon.xml.template photon.xml
 
+##Comment out next section for no automation
 # Import list of Automation Shell Scripts into OVA Automation List
 echo "> Exporting Automation Shells Scripts to a list for OVA use..."
 #rm array_list.txt
@@ -59,6 +60,10 @@ fi
 
 #ovftool ${OVF_PATH}/${PHOTON_APPLIANCE_NAME}.ovf ${OUTPUT_PATH}/${FINAL_PHOTON_APPLIANCE_NAME}.ova
 ovftool --eula@=eula.txt ${OVF_PATH}/${PHOTON_APPLIANCE_NAME}.ovf ${OUTPUT_PATH}/${FINAL_PHOTON_APPLIANCE_NAME}.ova
+#mv ${OVF_PATH}/${FINAL_PHOTON_APPLIANCE_NAME}.ova ${OUTPUT_PATH}/${FINAL_PHOTON_APPLIANCE_NAME}.ova 
 
+rm -rf ${OVF_PATH}/*.ovf
+rm -rf ${OVF_PATH}/*.vmdk
+rm -rf ${OVF_PATH}/*.nvram
 rm -rf ${OVF_PATH}
 rm -f photon.xml
