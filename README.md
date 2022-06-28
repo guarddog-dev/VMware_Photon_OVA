@@ -1,17 +1,17 @@
 ## Packer config to build Vsphere virtual machines templates from Photon OS ISO file as a source.
 
+#### Framework from this project came from William Lam's @lamw Harbor project. You can find it here:
+https://github.com/lamw/harbor-appliance
 
 ## Prior to first run:
-1. Configure the variables in photon.json. If you wish to change the USERD variable from administrator, you will also need to update many of the shell script files with the updated user account (USERD=[xx]).
+1. Configure the variables in photon.variables.pkr.hcl. If you wish to change the USERD variable from administrator, you will also need to update many of the shell script files with the updated user account (USERD=[xx]).
 Note: Do not put any capital letters in the name of the VM if you change the vm name, as this will cause the install to fail.
 
-2. Configure the variables in the photon-builder.json. 
+2. Configure the variables in the photon.variables.pkr.hcl 
 
-3. Configure the variables in the photon-version.json.
+3. Enable SSH on the host you will be building with. Packer will work directly with that host (does not require a VCSA).
 
-4. Enable SSH on the host you will be building with. Packer will work directly with that host (does not require a VCSA).
-
-5. Set the Net.GuestIPHack setting on the ESXi host. This will allow packer to VNC to the host and input the commands needed during the inital OS deployment. Post deployment of the OS packer will use SSH.
+4. Set the Net.GuestIPHack setting on the ESXi host. This will allow packer to VNC to the host and input the commands needed during the inital OS deployment. Post deployment of the OS packer will use SSH.
 #### CLI Method:
 >esxcli system settings advanced set -o /Net/GuestIPHack -i 1
 #### PowerCLI Method:
@@ -31,9 +31,9 @@ Note: Do not put any capital letters in the name of the VM if you change the vm 
 
 >Get-AdvancedSetting -Name Net.GuestIPHack -Entity $VMHOST
 
-6. Update the Photon ISO URL/Checksums with newer versions if needed. If you wish to do this, you will also likely need to update the photon.json "boot_command" section for the updated OS version.
+5. Update the Photon ISO URL/Checksums with newer versions if needed. If you wish to do this, you will also likely need to update the photon.json "boot_command" section for the updated OS version.
 
-7. Install ovftool, git-all, powershell, and packer utilities.
+6. Install ovftool, git-all, powershell, and packer utilities.
 #### Due to requirements, it is recommended to build this OVA from a Ubuntu Linux desktop with a GUI.
 #### Download the ovftool from VMware Developer (get the lastest version). This will require a standard browser like Firefox or Chromium.
 https://developer.vmware.com/web/tool/4.4.0/ovf
@@ -49,7 +49,7 @@ https://docs.microsoft.com/en-us/powershell/scripting/install/install-ubuntu?vie
 >sudo apt install -y git-all
 >git --version
 
-8. Clone this repository to your Linux Desktop 
+7. Clone this repository to your Linux Desktop 
 #### Download repository to your Linux computer/VM
 >git clone "https site for git repository"
 
@@ -63,13 +63,14 @@ Packer will open a random HTTP port from 8000 to 9000 as part of the packer buil
 >./build.sh
 
 ## Build Time:
-Approximately 45 minutes depending upon internet/network connectivity/CPU/drive speed.
+Approximately 15 minutes depending upon internet/network connectivity/CPU/drive speed.
 
 ## Troubleshooting
-The most common problem I have run into is not having enough wait time set for the OS to complete inital installation. If the time is not long enough, your OS will not complete the install prior to the rest of the VNC keyboard commands being run, causing everything to fail. If you need to tweak this, simply move up by increments of 25 seconds until you find the sweet spot. To set this, simply open the photon.json and update the line (27 presently) "<enter><wait65>", from 65 to 90.
+The most common problem I have run into is not having enough wait time set for the OS to complete inital installation. If the time is not long enough, your OS will not complete the install prior to the rest of the VNC keyboard commands being run, causing everything to fail. If you need to tweak this, simply move up by increments of 30 seconds until you find the sweet spot. To set this, simply open the photon.pkr.hcl and update the line (109 presently) "<enter><wait65>", from 65 to 90.
 
 ## Reference Website info on Packer for VMware
 https://packer.io/plugins/builders/vmware/iso
 
-## Framework from this project came from William Lam's Harbor project. You can find it here:
-https://github.com/lamw/harbor-appliance
+#### Please deploy to ESXi or VMware vSphere. Testing has been completed to verify that all guest customizations/automation work with this method for ESXi 6.7+ and vSphere 6.7+.
+
+#### If deploying to VMware Workstation or other virtualization environments, guest customizations will not function. Root password will default to VMware12345!@#$% and will use DHCP for its network configuration.
