@@ -1,3 +1,5 @@
+#!/bin/bash
+
 ##Install Extra Tools
 echo "  Installing Tools ..."
 
