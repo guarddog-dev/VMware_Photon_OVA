@@ -1,6 +1,6 @@
 #!/bin/bash
 # Setup Harbor Registry
-echo '> Preparing for Harbor Registry...'
+echo '  Preparing for Harbor Registry ...'
 
 # Versions
 #Version of Cert Manager to install
@@ -21,24 +21,24 @@ CLUSTER_NAME='local-cluster'
 CONTROL_PLANE="$CLUSTER_NAME"-control-plane
 
 # Create Unmanaged Cluster
-echo '> Creating Unmanaged Cluster...'
+echo '   Creating Unmanaged Cluster ...'
 tanzu um create $CLUSTER_NAME -p 80:80 -p 443:443 -c calico
 
 # Valideate Cluster is ready
-echo "> Validating Unmanaged Cluster $CLUSTER_NAME is Ready..."
+echo "   Validating Unmanaged Cluster $CLUSTER_NAME is Ready ..."
 STATUS=NotReady
 while [[ $STATUS != "Ready" ]]
 do
-echo "Tanzu Cluster $CLUSTER_NAME Status - NotReady"
+echo "    Tanzu Cluster $CLUSTER_NAME Status - NotReady"
 sleep 10s
 STATUS=$(kubectl get nodes -n $CONTROL_PLANE | tail -n +2 | awk '{print $2}')
 done
-echo "Tanzu Cluster $CLUSTER_NAME Status - Ready"
+echo "    Tanzu Cluster $CLUSTER_NAME Status - Ready"
 kubectl get nodes,po -A
 sleep 20s
 
 # Install Cert Manager
-echo "> Installing Cert Manager version ${CERT_MANAGER_PACKAGE_VERSION}..."
+echo "   Installing Cert Manager version ${CERT_MANAGER_PACKAGE_VERSION}..."
 # https://tanzucommunityedition.io/docs/v0.12/package-readme-cert-manager-1.8.0/
 tanzu package available list cert-manager.community.tanzu.vmware.com
 tanzu package install cert-manager --package-name cert-manager.community.tanzu.vmware.com --version ${CERT_MANAGER_PACKAGE_VERSION}
@@ -48,10 +48,10 @@ tanzu package installed list -n default
 PNAME="Cert Manager"
 PACKAGE="cert-manager"
 CSTATUS='NotRunning'
-echo "> Validating $PNAME is ready..."
+echo "   Validating $PNAME is ready ..."
 while [[ $CSTATUS != "Running" ]]
 do
-echo "$PNAME - NotRunning"
+echo "    $PNAME - NotRunning"
 APPNAME=$(kubectl -n $PACKAGE get po -l app=$PACKAGE -o name | cut -d '/' -f 2)
 CSTATUS=$(kubectl get po -n $PACKAGE | grep $APPNAME | awk '{print $3}')
 done
@@ -65,7 +65,7 @@ CSTATUS='NotReconziled'
 echo "> Validating $PNAME is reconciled..."
 while [[ $CSTATUS != "Reconcile succeeded" ]]
 do
-echo "$PNAME not reconciled"
+echo "    $PNAME not reconciled"
 CSTATUS=$(tanzu package installed get $PACKAGE | grep STATUS | awk '{print $2" "$3}')
 done
 echo "$PNAME $CSTATUS"
@@ -73,7 +73,7 @@ tanzu package installed get $PACKAGE | grep STATUS
 sleep 20s
 
 # Install Contour
-echo "> Installing Contour version ${CONTOUR_PACKAGE_VERSION}..."
+echo "   Installing Contour version ${CONTOUR_PACKAGE_VERSION} ..."
 # https://tanzucommunityedition.io/docs/v0.12/package-readme-contour-1.20.1/
 tanzu package available list contour.community.tanzu.vmware.com
 cat <<EOF >contour-values.yaml
@@ -110,7 +110,7 @@ com
 PNAME="projectcontour"
 PACKAGE="contour"
 CSTATUS='NotReconziled'
-echo "> Validating $PNAME is reconciled..."
+echo "   Validating $PNAME is reconciled ..."
 while [[ $CSTATUS != "Reconcile succeeded" ]]
 do
 echo "$PNAME not reconciled"
@@ -121,14 +121,14 @@ echo "$PNAME $CSTATUS"
 sleep 20s
 
 # Install Harbor
-echo "> Preparing for Harbor Registry version ${HARBOR_PACKAGE_VERSION}..."
+echo "   Preparing for Harbor Registry version ${HARBOR_PACKAGE_VERSION} ..."
 # https://tanzucommunityedition.io/docs/v0.12/package-readme-harbor-2.4.2/
-echo '> Downloading Harbor Registry files...'
+echo '    Downloading Harbor Registry files ...'
 image_url=$(kubectl get packages harbor.community.tanzu.vmware.com.${HARBOR_PACKAGE_VERSION} -o jsonpath='{.spec.template.spec.fetch[0].imgpkgBundle.image}')
 imgpkg pull -b $image_url -o /tmp/harbor-package
 cp /tmp/harbor-package/config/values.yaml harbor-values.yaml
 cp /tmp/harbor-package/config/scripts/generate-passwords.sh .
-echo '> Generating Secrets/Passwords for Harbor-values.yaml file...'
+echo '    Generating Secrets/Passwords for Harbor-values.yaml file ...'
 bash generate-passwords.sh harbor-values.yaml
 #set harbor initial password
 sudo sed -i "s/harborAdminPassword:.*/harborAdminPassword: ${HARBOR_ADMIN_PASSWORD}/g" harbor-values.yaml
@@ -138,9 +138,9 @@ echo '> Removing comments in Harbor-values.yaml file...'
 yq -i eval '... comments=""' harbor-values.yaml
 #echo '> Setting Hostname Harbor-values.yaml file...'
 sudo sed -i "s/harbor.yourdomain.com/${HARBOR_FQDN}/g" harbor-values.yaml
-echo '> Updating /etc/hosts with harbor info...'
+echo '    Updating /etc/hosts with harbor info ...'
 echo "$IPADDRS harbor.yourdomain.com notary.harbor.yourdomain.com" >> /etc/hosts
-echo '> Installing Harbor Registry...'
+echo '    Installing Harbor Registry ...'
 tanzu package install harbor \
    --package-name harbor.community.tanzu.vmware.com \
    --version ${HARBOR_PACKAGE_VERSION} \
@@ -150,7 +150,7 @@ tanzu package install harbor \
 PNAME="harbor"
 PACKAGE="harbor"
 CSTATUS='NotReconziled'
-echo "> Validating $PNAME is reconciled..."
+echo "    Validating $PNAME is reconciled ..."
 while [[ $CSTATUS != "Reconcile succeeded" ]]
 do
 echo "$PNAME not reconciled"
