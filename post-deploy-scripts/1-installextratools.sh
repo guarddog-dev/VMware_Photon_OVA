@@ -10,8 +10,8 @@ echo "   Installing Carvel Tools ..."
 sudo bash install.sh > /dev/null 2>&1
 
 #Validate Carvel.dev utilities
-echo "   Validating Carvel Tool imgpkg ..."
-imgpkg version
+#echo "   Validating Carvel Tool imgpkg ..."
+#imgpkg version
 
 #Install yq. The YAML, JSON, and XML Processor Utility
 echo "   Installing yq. The YAML, JSON, and XML Processor Utility ..."
@@ -19,7 +19,7 @@ echo "   Installing yq. The YAML, JSON, and XML Processor Utility ..."
 VERSION="v4.25.2"
 BINARY=yq_linux_amd64
 sudo wget https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY}.tar.gz -O - | tar xz && sudo mv ${BINARY} /usr/bin/yq
-yq --version
+#yq --version
 
 #Download Kubecolor
 echo "   Downloading Kubecolor ..."
@@ -57,7 +57,7 @@ echo "   Installing Helm ..."
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
 chmod 700 get_helm.sh
 ./get_helm.sh  > /dev/null 2>&1
-helm version
+#helm version
 rm get_helm.sh
 
 #Install Knative Client
@@ -68,7 +68,7 @@ curl -LO https://github.com/knative/client/releases/download/knative-v${VERSION}
 mv kn-linux-amd64 kn
 chmod +x kn
 mv kn /usr/local/bin/.
-kn version
+#kn version
 
 #Install Kpack Cli Client
 #https://github.com/vmware-tanzu/kpack-cli/releases
@@ -78,7 +78,7 @@ curl -LO https://github.com/vmware-tanzu/kpack-cli/releases/download/v${VERSION}
 mv kp-linux-${VERSION} kp
 chmod +x kp
 mv kp /usr/local/bin/.
-kp version
+#kp version
 
 #Install Krew
 #https://krew.sigs.k8s.io/docs/user-guide/setup/install/
@@ -94,11 +94,11 @@ echo "   Installing kubectl krew ..."
 )
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 echo 'export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"' >> /etc/profile
-kubectl krew version
+#kubectl krew version
 
 #Install Tree
 #https://github.com/ahmetb/kubectl-tree
 echo "   Installing Kubectl tree ..."
 kubectl krew install tree
-kubectl tree --version
+#kubectl tree --version
 
