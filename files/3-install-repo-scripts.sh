@@ -7,25 +7,26 @@
 # Variables
 REPO="https://github.com/guarddog-dev"
 REPONAME="VMware_Photon_OVA"
-FOLDER="post-deploy-scripts"
+REPOFOLDER="post-deploy-scripts"
 
 #Download Repo Folder
-echo "\e[92m  Downloading Github Repo ${REPO}/${REPONAME} - Folder: ${FOLDER}"
+echo -e "\e[92m  Downloading Repo Folder ..." > /dev/console
 git clone --filter=blob:none --sparse ${REPO}/${REPONAME}
 cd ${REPONAME}
 git sparse-checkout init --cone
-git sparse-checkout add ${FOLDER}
-cd ${FOLDER}
+git sparse-checkout add ${REPOFOLDER}
+cd ${REPOFOLDER}
 CURRENTPATH=$(pwd)
+chmod +x *.sh
 
 # Starting Automation
 echo -e "\e[92m  Running Repo Scripting ..." > /dev/console
 for f in *.sh;do 
-  bash "$f"
+  bash "$f" > /dev/console
 done
 
 #Cleanup
-echo "\e[92m  Cleaning up Github Repo Download ..." > /dev/console
+echo -e "\e[92m  Cleaning up Repo Download ..." > /dev/console
 cd ${CURRENTPATH}
 rm -rf *
 cd ..
