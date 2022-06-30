@@ -182,11 +182,6 @@ build {
 
   provisioner "shell" {
     execute_command = "echo ${var.guest_password} | sudo -S bash -c '{{ .Path }}'"
-    script          = "scripts/50-installrear.sh"
-  }
-
-  provisioner "shell" {
-    execute_command = "echo ${var.guest_password} | sudo -S bash -c '{{ .Path }}'"
     script          = "scripts/99-hardenos.sh"
   }
 
