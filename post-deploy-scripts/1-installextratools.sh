@@ -14,18 +14,18 @@ sudo bash install.sh > /dev/null 2>&1
 #imgpkg version
 
 #Install yq. The YAML, JSON, and XML Processor Utility
-echo "   Installing yq Utility ..."
+echo "   Installing YQ Utility ..."
 #export VERSION=$(curl -s https://github.com/mikefarah/yq/releases/latest | cut -d '/' -f8 | cut -d '"' -f 1)
 VERSION="v4.25.2"
 BINARY=yq_linux_amd64
-sudo wget https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY}.tar.gz -O - | tar xz && sudo mv ${BINARY} /usr/bin/yq
+sudo wget https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY}.tar.gz -O - | tar xz && sudo mv ${BINARY} /usr/bin/yq > /dev/null 2>&1
 #yq --version
 
 #Download Kubecolor
 echo "   Downloading Kubecolor ..."
 RELEASE="0.0.20"
 sudo wget https://github.com/hidetatz/kubecolor/releases/download/v${RELEASE}/kubecolor_${RELEASE}_Linux_x86_64.tar.gz
-sudo tar -xvzf kubecolor_${RELEASE}_Linux_x86_64.tar.gz
+sudo tar -xvzf kubecolor_${RELEASE}_Linux_x86_64.tar.gz > /dev/null 2>&1
 
 #Install Kubecolor
 echo "   Installing Kubecolor ..."
