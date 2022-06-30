@@ -34,7 +34,7 @@ sudo install -o root -g root -m 0755 kubecolor /usr/local/bin/kubecolor
 alias kubectl="kubecolor"
 
 #Set up Kubecolor permanent Alias
-echo  "   Setting up Kubecolor permanent alias ..."
+echo  "   Creating Kubecolor alias ..."
 cat <<EOF >> 00-aliases
 #Personal Aliases
 alias kubectl="kubecolor"
