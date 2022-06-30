@@ -1,19 +1,20 @@
 ##Install Extra Tools
+echo " Installing Tools ..."
 
 #Download Carvel.dev Tools
-echo "> Downloading Carvel Tools..."
+echo "   Downloading Carvel Tools ..."
 sudo wget -O- https://carvel.dev/install.sh > install.sh
 
 #Install Carvel.dev utilities
-echo "> Installing Carvel Tools..."
+echo "   Installing Carvel Tools ..."
 sudo bash install.sh
 
 #Validate Carvel.dev utilities
-echo "> Validating Carvel Tool imgpkg..."
+echo "   Validating Carvel Tool imgpkg ..."
 imgpkg version
 
 #Install yq. The YAML, JSON, and XML Processor Utility
-echo "> Installing yq. The YAML, JSON, and XML Processor Utility..."
+echo "   Installing yq. The YAML, JSON, and XML Processor Utility ..."
 #export VERSION=$(curl -s https://github.com/mikefarah/yq/releases/latest | cut -d '/' -f8 | cut -d '"' -f 1)
 VERSION="v4.25.2"
 BINARY=yq_linux_amd64
@@ -21,29 +22,29 @@ sudo wget https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY}
 yq --version
 
 #Download Kubecolor
-echo "> Downloading Kubecolor..."
+echo "   Downloading Kubecolor ..."
 RELEASE="0.0.20"
 sudo wget https://github.com/hidetatz/kubecolor/releases/download/v${RELEASE}/kubecolor_${RELEASE}_Linux_x86_64.tar.gz
 sudo tar -xvzf kubecolor_${RELEASE}_Linux_x86_64.tar.gz
 
 #Install Kubecolor
-echo "> Installing Kubecolor..."
+echo "   Installing Kubecolor ..."
 sudo install -o root -g root -m 0755 kubecolor /usr/local/bin/kubecolor
 kubecolor
 alias kubectl="kubecolor"
 
 #Install Kubectx
-echo "> Installing Kubectx..."
+echo "   Installing Kubectx ..."
 sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
 sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
 sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
 
 #Clean up Directory
-echo "> Cleaning up Directory..."
+echo "   Cleaning up Directory ..."
 sudo rm *
 
 #Set up Kubecolor permanent Alias
-echo  '> Setting up Kubecolor permanent alias...'
+echo  "   Setting up Kubecolor permanent alias ..."
 cat <<EOF >> 00-aliases
 #Personal Aliases
 alias kubectl="kubecolor"
@@ -51,7 +52,7 @@ EOF
 sudo mv 00-aliases /etc/profile.d/00-aliases.sh
 
 #Install Helm
-echo '> Installing Helm...'
+echo "   Installing Helm ..."
 #https://helm.sh/docs/intro/install/
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
 chmod 700 get_helm.sh
@@ -61,7 +62,7 @@ rm get_helm.sh
 
 #Install Knative Client
 #https://github.com/knative/client/releases
-echo "> Installing Knative Client..."
+echo "   Installing Knative Client ..."
 export VERSION=$(git ls-remote --tags https://github.com/knative/client | cut -d/ -f3- | grep knative | tail -n1 | cut -d '^' -f 1 | cut -d 'v' -f 3)
 curl -LO https://github.com/knative/client/releases/download/knative-v${VERSION}/kn-linux-amd64
 mv kn-linux-amd64 kn
@@ -71,7 +72,7 @@ kn version
 
 #Install Kpack Cli Client
 #https://github.com/vmware-tanzu/kpack-cli/releases
-echo "> Installing Kpack Cli Client..."
+echo "   Installing Kpack Cli Client ..."
 export VERSION=$(git ls-remote --tags https://github.com/vmware-tanzu/kpack-cli | cut -d/ -f3- | tail -n1 | cut -d '^' -f 1  | cut -d 'v' -f 2)
 curl -LO https://github.com/vmware-tanzu/kpack-cli/releases/download/v${VERSION}/kp-linux-${VERSION}
 mv kp-linux-${VERSION} kp
@@ -81,7 +82,7 @@ kp version
 
 #Install Krew
 #https://krew.sigs.k8s.io/docs/user-guide/setup/install/
-echo "> Installing kubectl krew..."
+echo "   Installing kubectl krew ..."
 (
   set -x; cd "$(mktemp -d)" &&
   OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
@@ -97,7 +98,7 @@ kubectl krew version
 
 #Install Tree
 #https://github.com/ahmetb/kubectl-tree
-echo "> Installing Kubectl tree..."
+echo "> Installing Kubectl tree ..."
 kubectl krew install tree
 kubectl tree --version
 
