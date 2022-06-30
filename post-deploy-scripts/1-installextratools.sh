@@ -1,5 +1,5 @@
 ##Install Extra Tools
-echo " Installing Tools ..."
+echo "  Installing Tools ..."
 
 #Download Carvel.dev Tools
 echo "   Downloading Carvel Tools ..."
@@ -30,7 +30,7 @@ sudo tar -xvzf kubecolor_${RELEASE}_Linux_x86_64.tar.gz
 #Install Kubecolor
 echo "   Installing Kubecolor ..."
 sudo install -o root -g root -m 0755 kubecolor /usr/local/bin/kubecolor
-kubecolor
+#kubecolor
 alias kubectl="kubecolor"
 
 #Install Kubectx
@@ -98,7 +98,7 @@ kubectl krew version
 
 #Install Tree
 #https://github.com/ahmetb/kubectl-tree
-echo "> Installing Kubectl tree ..."
+echo "   Installing Kubectl tree ..."
 kubectl krew install tree
 kubectl tree --version
 
