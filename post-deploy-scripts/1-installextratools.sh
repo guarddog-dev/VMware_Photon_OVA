@@ -7,7 +7,7 @@ sudo wget -O- https://carvel.dev/install.sh > install.sh
 
 #Install Carvel.dev utilities
 echo "   Installing Carvel Tools ..."
-sudo bash install.sh
+sudo bash install.sh > /dev/null 2>&1
 
 #Validate Carvel.dev utilities
 echo "   Validating Carvel Tool imgpkg ..."
@@ -56,7 +56,7 @@ echo "   Installing Helm ..."
 #https://helm.sh/docs/intro/install/
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
 chmod 700 get_helm.sh
-./get_helm.sh
+./get_helm.sh  > /dev/null 2>&1
 helm version
 rm get_helm.sh
 
@@ -90,7 +90,7 @@ echo "   Installing kubectl krew ..."
   KREW="krew-${OS}_${ARCH}" &&
   curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
   tar zxvf "${KREW}.tar.gz" &&
-  ./"${KREW}" install krew
+  ./"${KREW}" install krew > /dev/null 2>&1
 )
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 echo 'export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"' >> /etc/profile
