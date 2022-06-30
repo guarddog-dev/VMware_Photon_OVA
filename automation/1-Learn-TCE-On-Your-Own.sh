@@ -1,2 +1,2 @@
 #!/bin/bash
-echo '> Completing Automation to allow user to learn Tanzu Community Edition and Kubernetes...'
+echo '> User selected to Learn Tanzu Community Edition and Kubernetes on your own...'
