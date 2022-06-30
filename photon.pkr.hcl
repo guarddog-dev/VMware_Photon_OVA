@@ -182,11 +182,6 @@ build {
 
   provisioner "shell" {
     execute_command = "echo ${var.guest_password} | sudo -S bash -c '{{ .Path }}'"
-    script          = "scripts/6-installextratools.sh"
-  }
-
-  provisioner "shell" {
-    execute_command = "echo ${var.guest_password} | sudo -S bash -c '{{ .Path }}'"
     script          = "scripts/50-installrear.sh"
   }
 
@@ -219,10 +214,15 @@ build {
     destination = "/root/setup/2-setup-network.sh"
     source      = "files/2-setup-network.sh"
   }
+  
+    provisioner "file" {
+    destination = "/root/setup/3-install-repo-scripts.sh"
+    source      = "files/3-install-repo-scripts.sh"
+  }
 
   provisioner "file" {
-    destination = "/root/setup/3-setup-automation.sh"
-    source      = "files/3-setup-automation.sh"
+    destination = "/root/setup/4-setup-automation.sh"
+    source      = "files/4-setup-automation.sh"
   }
 
   provisioner "file" {

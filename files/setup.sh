@@ -169,9 +169,14 @@ else
 	. /${USERD}/setup/2-setup-network.sh
 	sleep 20
 	
+	##Comment out for no repo scripting downloads
+	echo -e "\e[92mStarting Repo Install ..." > /dev/console
+	. /${USERD}/setup/3-install-repo-scripts.sh 
+	sleep 20
+	
 	##Comment out for no automation
 	echo -e "\e[92mStarting Automation ..." > /dev/console
-	. /${USERD}/setup/3-setup-automation.sh 
+	. /${USERD}/setup/4-setup-automation.sh 
 	sleep 20
 	
 	echo -e "\e[92mResizing Partition (if needed) ..." > /dev/console
