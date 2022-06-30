@@ -14,7 +14,7 @@ sudo bash install.sh > /dev/null 2>&1
 #imgpkg version
 
 #Install yq. The YAML, JSON, and XML Processor Utility
-echo "   Installing yq. The YAML, JSON, and XML Processor Utility ..."
+echo "   Installing yq Utility ..."
 #export VERSION=$(curl -s https://github.com/mikefarah/yq/releases/latest | cut -d '/' -f8 | cut -d '"' -f 1)
 VERSION="v4.25.2"
 BINARY=yq_linux_amd64
@@ -33,16 +33,6 @@ sudo install -o root -g root -m 0755 kubecolor /usr/local/bin/kubecolor
 #kubecolor
 alias kubectl="kubecolor"
 
-#Install Kubectx
-echo "   Installing Kubectx ..."
-sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
-sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
-sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
-
-#Clean up Directory
-echo "   Cleaning up Directory ..."
-sudo rm *
-
 #Set up Kubecolor permanent Alias
 echo  "   Setting up Kubecolor permanent alias ..."
 cat <<EOF >> 00-aliases
@@ -50,6 +40,16 @@ cat <<EOF >> 00-aliases
 alias kubectl="kubecolor"
 EOF
 sudo mv 00-aliases /etc/profile.d/00-aliases.sh
+
+#Install Kubectx
+echo "   Installing Kubectx ..."
+sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
+sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
+sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
+
+#Clean up Directory
+#echo "   Cleaning up Directory ..."
+sudo rm *
 
 #Install Helm
 echo "   Installing Helm ..."
