@@ -22,13 +22,13 @@ guest_password = "VMware12345!"
 // VMHOST Info
 builder_host = "10.10.0.11"
 builder_host_username = "root"
-builder_host_password = "Beta-Max1!"
+builder_host_password = "VMware1!"
 builder_host_datastore = "vsanDatastore"
 builder_host_portgroup = "VM Network"
 
 // VCSA Info
 ovftool_deploy_vcenter = "10.10.0.100"
-ovftool_deploy_vcenter_password = "Beta-Max1!"
+ovftool_deploy_vcenter_password = "VMware1!"
 ovftool_deploy_vcenter_username ="administrator@vsphere.local"
 
 // OVA OVF Template Name
