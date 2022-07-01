@@ -226,11 +226,6 @@ build {
   }
 
   provisioner "file" {
-    destination = "/etc/rear/site.conf"
-    source      = "files/site.conf"
-  }
-
-  provisioner "file" {
     destination = "/root/automation"
     source      = "automation/"
   }
