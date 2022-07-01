@@ -35,7 +35,7 @@ BACKUP_URL="iso:///backup"
 OUTPUT_URL=null
 
 # Save to NFS and boot from small ISO
-# BACKUP_URL=nfs://10.13.0.9/mnt/FREENAS01/exports
+# BACKUP_URL=nfs://<IP_ADDRESS_HERE>/mnt/FREENAS01/exports
 
 # Notes
 # Place file in /etc/rear/site.conf
