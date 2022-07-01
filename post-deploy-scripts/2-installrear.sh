@@ -43,6 +43,6 @@ OUTPUT_URL=null
 EOF
 
 # Clean up git clone
-echo '   Clearning Up Rear Install ...'
+echo '   Cleaning Up Rear Install ...'
 cd ..
 rm -rf rear
