@@ -4,10 +4,14 @@ echo '   Preparing for Velero backup/restore package ...'
 
 # Versions
 VELERO_PACKAGE_VERSION=1.8.0
+#Tanzu/Kubernetes cluster name
+CLUSTER_NAME='local-cluster'
+#Control Plane Name
+CONTROL_PLANE="$CLUSTER_NAME"-control-plane
 
 # Create Unmanaged Cluster
-echo '    Creating Unmanaged Cluster ...'
-tanzu um create local-cluster -p 80:80 -p 443:443 -c calico
+echo '   Creating Unmanaged Cluster ...'
+tanzu um create $CLUSTER_NAME -p 80:80 -p 443:443 -c calico
 
 # Valideate Cluster is ready
 echo "   Validating Unmanaged Cluster $CLUSTER_NAME is Ready ..."
