@@ -102,7 +102,7 @@ echo 'export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"' >> /etc/profile
 
 #Install Tree
 #https://github.com/ahmetb/kubectl-tree
-echo "   Installing Kubectl tree ..."
+echo "   Installing kubectl tree ..."
 kubectl krew install tree
 #kubectl tree --version
 
