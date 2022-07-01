@@ -12,6 +12,7 @@ sudo wget -O- https://carvel.dev/install.sh > install.sh
 #Install Carvel.dev utilities
 echo "   Installing Carvel Tools ..."
 sudo bash install.sh > /dev/null 2>&1
+echo "   Carvel Tools Installed (kapp, kbld, kctrl, kwt, imgpkg, ytt, vendir)  ..."
 
 #Validate Carvel.dev utilities
 #echo "   Validating Carvel Tool imgpkg ..."
@@ -66,7 +67,7 @@ rm get_helm.sh
 
 #Install Knative Client
 #https://github.com/knative/client/releases
-echo "   Installing Knative Client ..."
+echo "   Installing Knative (kn) Client ..."
 export VERSION=$(git ls-remote --tags https://github.com/knative/client | cut -d/ -f3- | grep knative | tail -n1 | cut -d '^' -f 1 | cut -d 'v' -f 3)
 curl -LO https://github.com/knative/client/releases/download/knative-v${VERSION}/kn-linux-amd64
 mv kn-linux-amd64 kn
@@ -76,7 +77,7 @@ mv kn /usr/local/bin/.
 
 #Install Kpack Cli Client
 #https://github.com/vmware-tanzu/kpack-cli/releases
-echo "   Installing Kpack Cli Client ..."
+echo "   Installing Kpack Cli (kp) Client ..."
 export VERSION=$(git ls-remote --tags https://github.com/vmware-tanzu/kpack-cli | cut -d/ -f3- | tail -n1 | cut -d '^' -f 1  | cut -d 'v' -f 2)
 curl -LO https://github.com/vmware-tanzu/kpack-cli/releases/download/v${VERSION}/kp-linux-${VERSION}
 mv kp-linux-${VERSION} kp
