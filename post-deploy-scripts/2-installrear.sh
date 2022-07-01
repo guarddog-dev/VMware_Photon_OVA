@@ -2,7 +2,8 @@
 # Install Relax-and-Recover
 
 # Install prereqs
-echo ' Installing Relax-and-Recover prereqs ...'
+echo '   Installing Relax-and-Recover (rear) ...'
+echo '   Installing (rear) prereqs ...'
 sudo tdnf install -y \
 make \
 mingetty \
@@ -13,7 +14,7 @@ binutils \
 git  > /dev/null 2>&1
 
 # Install prereqs
-echo '   Installing Relax-and-Recover (rear) ...'
+echo '   Installing (rear) ...'
 git clone https://github.com/rear/rear.git
 cd rear
 make install  > /dev/null 2>&1
