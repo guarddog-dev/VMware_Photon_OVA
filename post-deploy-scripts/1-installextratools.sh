@@ -18,7 +18,7 @@ sudo bash install.sh > /dev/null 2>&1
 #imgpkg version
 
 #Install yq. The YAML, JSON, and XML Processor Utility
-echo "   Installing YQ Utility ..."
+echo "   Installing yq utility ..."
 #export VERSION=$(curl -s https://github.com/mikefarah/yq/releases/latest | cut -d '/' -f8 | cut -d '"' -f 1)
 VERSION="v4.25.2"
 BINARY=yq_linux_amd64
