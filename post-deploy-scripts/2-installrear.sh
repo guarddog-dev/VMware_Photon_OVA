@@ -10,17 +10,17 @@ parted \
 diffutils \
 kbd \
 binutils \
-git
+git  > /dev/null 2>&1
 
 # Install prereqs
 echo '   Installing Relax-and-Recover (rear) ...'
 git clone https://github.com/rear/rear.git
 cd rear
-make install
+make install  > /dev/null 2>&1
 
 # Install prereqs
-echo '   Review rear version ...'
-rear --version
+#echo '   Review rear version ...'
+#rear --version
 
 # Create rear /etc/rear/site.conf file
 cat <<EOF > /etc/rear/site.conf
