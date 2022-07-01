@@ -94,7 +94,7 @@ serviceWeb:
   http:
 
     # -- Generate a service for HTTP traffic
-    enabled: true
+    enabled: false
 
     # -- The port of the web HTTP service
     port: 80
