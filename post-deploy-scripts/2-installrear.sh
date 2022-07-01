@@ -22,7 +22,7 @@ make install
 echo '   Review rear version ...'
 rear --version
 
-# Create rear etc file
+# Create rear /etc/rear/site.conf file
 cat <<EOF > /etc/rear/site.conf
 # Site config file for Relax and Recover (ReaR)
 
