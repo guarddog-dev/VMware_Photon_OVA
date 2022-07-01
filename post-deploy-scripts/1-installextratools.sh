@@ -51,7 +51,7 @@ sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
 
 #Clean up Directory
 #echo "   Cleaning up Directory ..."
-sudo rm -v !(*.sh)
+sudo "rm -v !(*.sh)"
 
 #Install Helm
 echo "   Installing Helm ..."
