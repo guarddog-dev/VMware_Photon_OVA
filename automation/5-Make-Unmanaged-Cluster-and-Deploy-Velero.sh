@@ -1,6 +1,6 @@
 #!/bin/bash
 # Setup Velero
-echo '   Installing Unmanaged Cluster with Velero package ...'
+echo '   Creating Unmanaged Cluster with Velero package ...'
 
 # Versions
 VELERO_PACKAGE_VERSION=1.8.0
