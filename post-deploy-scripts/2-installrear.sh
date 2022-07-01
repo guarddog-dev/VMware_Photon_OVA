@@ -16,7 +16,7 @@ git
 echo '   Installing Relax-and-Recover (rear) ...'
 git clone https://github.com/rear/rear.git
 cd rear
-make install
+sudo make install
 
 # Install prereqs
 echo '   Review rear version ...'
@@ -24,5 +24,5 @@ rear --version
 
 # Clean up git clone
 echo '   Clearning Up Rear Install ...'
-cd ~
+cd ..
 rm -rf rear
