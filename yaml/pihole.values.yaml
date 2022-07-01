@@ -28,7 +28,7 @@ dualStack:
 
 dnsHostPort:
   # -- set this to true to enable dnsHostPort
-  enabled: false
+  enabled: true
   # -- default port for this pod
   port: 53
 
