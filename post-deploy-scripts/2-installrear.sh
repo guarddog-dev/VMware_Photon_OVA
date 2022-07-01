@@ -2,7 +2,7 @@
 # Install Relax-and-Recover
 
 # Install prereqs
-echo '   Installing Relax-and-Recover (rear) ...'
+echo "  Installing Relax-and-Recover (rear) ..."
 echo '   Installing (rear) prereqs ...'
 sudo tdnf install -y \
 make \
