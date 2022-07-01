@@ -236,7 +236,7 @@ adminPassword: "admin"
 # -- Use an existing secret for the admin password.
 admin:
   # -- Specify an existing secret to use as admin password
-  existingSecret: ""
+  existingSecret: "pihole-secret"
   # -- Specify the key inside the secret to use
   passwordKey: "password"
 
