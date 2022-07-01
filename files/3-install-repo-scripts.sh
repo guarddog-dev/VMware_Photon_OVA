@@ -21,8 +21,13 @@ chmod +x *.sh
 
 # Starting Automation
 echo -e "\e[92m  Running Repo Scripting ..." > /dev/console
-for f in *.sh;do 
+for f in *.sh;do
+  #run script
   bash "$f" > /dev/console
+  #go back to working directory
+  cd ${CURRENTPATH}
+  #cleanup
+  #sudo rm -v !(*.sh)
 done
 
 #Cleanup
