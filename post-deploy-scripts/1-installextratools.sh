@@ -2,6 +2,8 @@
 
 ##Install Extra Tools
 echo "  Installing Tools ..."
+mkdir tools
+cd tools
 
 #Download Carvel.dev Tools
 echo "   Downloading Carvel Tools ..."
@@ -51,7 +53,7 @@ sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
 
 #Clean up Directory
 #echo "   Cleaning up Directory ..."
-sudo "rm -v !(*.sh)"
+sudo rm *
 
 #Install Helm
 echo "   Installing Helm ..."
@@ -103,4 +105,8 @@ echo 'export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"' >> /etc/profile
 echo "   Installing Kubectl tree ..."
 kubectl krew install tree
 #kubectl tree --version
+
+#Clean up temp tools directory
+cd ..
+rmdir tools
 
