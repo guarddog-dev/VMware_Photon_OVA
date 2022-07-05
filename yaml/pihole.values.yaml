@@ -242,7 +242,7 @@ admin:
 
 # -- extraEnvironmentVars is a list of extra enviroment variables to set for pihole to use
 extraEnvVars: {}
-  # TZ: UTC
+   TZ: UTC
 
 # -- extraEnvVarsSecret is a list of secrets to load in as environment variables.
 extraEnvVarsSecret: {}
