@@ -94,7 +94,7 @@ serviceWeb:
   http:
 
     # -- Generate a service for HTTP traffic
-    enabled: false
+    enabled: true
 
     # -- The port of the web HTTP service
     port: 80
@@ -129,7 +129,7 @@ serviceWeb:
     # metallb.universe.tf/address-pool: network-services
     # metallb.universe.tf/allow-shared-ip: pihole-svc
 
-virtualHost: pi.hole
+virtualHost: pihole
 
 # -- Configuration for the Ingress
 ingress:
@@ -146,7 +146,7 @@ ingress:
   path: /
   hosts:
     # virtualHost (default value is pi.hole) will be appended to the hosts
-    - chart-example.local
+    - guarddog.lab
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
@@ -242,7 +242,7 @@ admin:
 
 # -- extraEnvironmentVars is a list of extra enviroment variables to set for pihole to use
 extraEnvVars:
-   TZ: UTC
+  TZ: "UTC"
 
 # -- extraEnvVarsSecret is a list of secrets to load in as environment variables.
 extraEnvVarsSecret: {}
@@ -369,7 +369,7 @@ webHttp: "80"
 webHttps: "443"
 
 # -- hostname of pod
-hostname: "pihole.guarddog.lab"
+hostname: ""
 
 # -- should the container use host network
 hostNetwork: "false"
