@@ -39,7 +39,7 @@ serviceDns:
   mixedService: false
 
   # -- `spec.type` for the DNS Service
-  type: NodePort
+  type: ClusterIP
 
   # -- The port of the DNS service
   port: 53
@@ -67,7 +67,7 @@ serviceDhcp:
   enabled: false
 
   # -- `spec.type` for the DHCP Service
-  type: NodePort
+  type: ClusterIP
 
   # -- The port of the DHCP service
   port: 67
