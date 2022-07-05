@@ -35,6 +35,7 @@ then
 				SYSLOG_DESTINATION=$(/${USERD}/setup/getOvfProperty.py "guestinfo.syslogdestination")
 				SYSLOG_PORT=$(/${USERD}/setup/getOvfProperty.py "guestinfo.syslogport")
 				SYSLOG_PROTOCOL=$(/${USERD}/setup/getOvfProperty.py "guestinfo.syslogprotocol")
+				LICENSE_INFO=$(/${USERD}/setup/getOvfProperty.py "guestinfo.license")
 				##Comment out for no automation
 				AUTOMATION_SELECTION=$(/${USERD}/setup/getOvfProperty.py "guestinfo.automation")
 			else
@@ -53,6 +54,7 @@ then
 				SYSLOG_DESTINATION=$(/${USERD}/setup/getOvfProperty.py "guestinfo.syslogdestination")
 				SYSLOG_PORT=$(/${USERD}/setup/getOvfProperty.py "guestinfo.syslogport")
 				SYSLOG_PROTOCOL=$(/${USERD}/setup/getOvfProperty.py "guestinfo.syslogprotocol")
+				LICENSE_INFO=$(/${USERD}/setup/getOvfProperty.py "guestinfo.license")
 				##Comment out for no automation
 				AUTOMATION_SELECTION=$(/${USERD}/setup/getOvfProperty.py "guestinfo.automation")
 			fi
@@ -78,6 +80,7 @@ then
 		SYSLOG_DESTINATION=""
 		SYSLOG_PORT=""
 		SYSLOG_PROTOCOL=""
+		LICENSE_INFO="FREETRIAL"
 		##Comment out for no automation
 		AUTOMATION_SELECTION=""
 		

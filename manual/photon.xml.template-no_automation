@@ -83,4 +83,9 @@ WARNING: Using this option will result in a less than
 fully secure installation.
             </Description>
         </Property>
+      <Category>Licensing</Category>
+        <Property ovf:key="guestinfo.license" ovf:type="string" ovf:userConfigurable="true" ovf:value="FREETRIAL" ovf:required="false">
+            <Label>License</Label>
+            <Description>Set the appliance license for use with a licensed product. Leave default of FREETRIAL not to license.</Description>
+        </Property>
     </ProductSection>
