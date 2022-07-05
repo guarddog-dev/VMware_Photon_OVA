@@ -266,7 +266,7 @@ antiaff:
 
 doh:
   # -- set to true to enabled DNS over HTTPs via cloudflared
-  enabled: false
+  enabled: true
   name: "cloudflared"
   repository: "crazymax/cloudflared"
   tag: latest
