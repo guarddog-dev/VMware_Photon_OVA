@@ -134,7 +134,7 @@ virtualHost: pi.hole
 # -- Configuration for the Ingress
 ingress:
   # -- Generate a Ingress resource
-  enabled: false
+  enabled: true
 
   # -- Specify an ingressClassName
   # ingressClassName: nginx
@@ -241,7 +241,7 @@ admin:
   passwordKey: "password"
 
 # -- extraEnvironmentVars is a list of extra enviroment variables to set for pihole to use
-extraEnvVars: {}
+extraEnvVars:
    TZ: UTC
 
 # -- extraEnvVarsSecret is a list of secrets to load in as environment variables.
