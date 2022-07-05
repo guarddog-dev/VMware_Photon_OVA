@@ -369,7 +369,7 @@ webHttp: "80"
 webHttps: "443"
 
 # -- hostname of pod
-hostname: ""
+hostname: "pihole.guarddog.lab"
 
 # -- should the container use host network
 hostNetwork: "false"
