@@ -11,12 +11,18 @@ CONTOUR_PACKAGE_VERSION=1.20.1
 DOMAIN_NAME=$(echo $HOSTNAME | cut -d '.' -f 2-3)
 #Internal DNS Entry to that resolves to the Pi-hole fqdn - you must make this DNS Entry
 PIHOLE_FQDN="pihole.${DOMAIN_NAME}"
+#Pihole Admin Password
+PIHOLE_ADMIN_PASSWORD="VMware12345!"
 #Tanzu/Kubernetes cluster name
 CLUSTER_NAME='local-cluster'
 #Control Plane Name
 CONTROL_PLANE="$CLUSTER_NAME"-control-plane
 #Location Name
 USERD=root
+# Github Variables for YAML files
+REPO="https://github.com/guarddog-dev"
+REPONAME="VMware_Photon_OVA"
+REPOFOLDER="yaml"
 
 # Create Unmanaged Cluster
 echo '   Creating Unmanaged Cluster ...'
@@ -120,109 +126,45 @@ sleep 20s
 
 ## Install Pi-Hole
 echo "   Adding helm repo mojo2600 for pihole deployment ..."
-
-# Get Timezone from OVA
-TZ=$(timedatectl status | grep "Time zone" | cut -d ":" -f 2 | cut -d " " -f 2)
-echo "   Timezone will be $TZ"
-
-
-<<com
-#create directories for pihole
-mkdir -p /data/pihole/{etc,dnsmasq.d}
-chmod go+r /data/pihole/{etc,dnsmasq.d}
-
-# Create Namespace pihole
-echo "   Creating namespace pihole"
-kubectl create namespace pihole
-
-cat <<EOF >pihole.yaml
-#Reference https://uthark.github.io/post/2021-10-06-running-pihole-kubernetes/
-apiVersion: v1
-kind: Pod
-metadata:
-  name: pihole
-  namespace: pihole
-spec:
-  hostNetwork: true
-  dnsPolicy: "None"
-  dnsConfig:
-    nameservers:
-      # upstream DNS used by pihole.
-      - 1.1.1.1
-  containers:
-    - name: pihole
-      # https://hub.docker.com/r/pihole/pihole/tags
-      image: pihole/pihole:2021.10
-      imagePullPolicy: IfNotPresent
-      env:
-        - name: TZ
-          value: ${TZ}
-        - name: WEBPASSWORD
-          value: VMware12345!
-      securityContext:
-        privileged: true
-      ports:
-        - containerPort: 53
-          protocol: TCP
-        - containerPort: 53
-          protocol: UDP
-        - containerPort: 67
-          protocol: UDP
-        - containerPort: 80
-          protocol: TCP
-        - containerPort: 443
-          protocol: TCP
-      volumeMounts:
-        - name: etc
-          mountPath: /etc/pihole
-        - name: dnsmasq
-          mountPath: /etc/dnsmasq.d
-      resources:
-        requests:
-          memory: 128Mi
-          cpu: 100m
-        limits:
-          memory: 2Gi
-          cpu: 1
-  volumes:
-    - name: etc
-      hostPath:
-        path: /data/pihole/etc
-        type: Directory
-    - name: dnsmasq
-      hostPath:
-        path: /data/pihole/dnsmasq.d
-        type: Directory
-EOF
-kubectl apply -f pihole.yaml
-com
-
-
-
-
-
-
 #Reference https://greg.jeanmart.me/2020/04/13/self-host-pi-hole-on-kubernetes-and-block-ad/
 helm repo add mojo2600 https://mojo2600.github.io/pihole-kubernetes/
 helm repo update
+
+## Download pihole yaml file from registry
+# Download Repo Folder
+echo -e "\e[92m  Downloading YAML Repo Folder ..." > /dev/console
+git clone --filter=blob:none --sparse ${REPO}/${REPONAME}
+cd ${REPONAME}
+git sparse-checkout init --cone
+git sparse-checkout add ${REPOFOLDER}
+cd ${REPOFOLDER}
+mv pihole.values.yaml /${USERD}/automation
+echo -e "\e[92m  Cleaning up YAML Repo Folder ..." > /dev/console
+# clean up Repo Folder
+rm *
+cd ..
+rmdir ${REPOFOLDER}
 
 # Create Namespace pihole
 echo "   Creating Namespace pihole ..."
 kubectl create namespace pihole
 
 # Create a secret to store Pi-Hole admin password
-echo "   Creating secret for pihole admin ..."
+echo "   Creating secret (password) for pihole admin ..."
 kubectl create secret generic pihole-secret \
-  --from-literal='password=VMware12345!' \
+  --from-literal="password=$PIHOLE_ADMIN_PASSWORD" \
   --namespace pihole
 
 # List secret password
-echo "   Listing secret password ..."
+echo "   Listing pihole admin secret (password) ..."
 kubectl get secret pihole-secret --namespace pihole -o jsonpath='{.data.password}' | base64 --decode
+echo " "
 
 # Get Timezone from OVA
 TZ=$(timedatectl status | grep "Time zone" | cut -d ":" -f 2 | cut -d " " -f 2)
-echo "   Timezone will be $TZ"
+echo "   System Timezone is $TZ ..."
+echo "   Updating yaml with System Timezone ..."
+sudo sed -i "s#UTC#$TZ#g" /${USERD}/automation/pihole.values.yaml
 
 # Install Pihole
 echo "   Using helm to install pihole ..."
@@ -230,11 +172,9 @@ helm install pihole mojo2600/pihole \
   --namespace pihole \
   --values pihole.values.yaml \
   --replace \
-  --set TZ=${TZ} 
 
 kubectl get pods -n pihole -o wide
 kubectl get services -n pihole -o wide
-
 
 # Create Pihole ingress rules
 echo "   Creating pihole ingress rules ..."
@@ -246,7 +186,7 @@ metadata:
   namespace: pihole
 spec:
   rules:
-  - host: pihole.guarddog.lab
+  - host: $PIHOLE_FQDN
     http:
       paths:
       - pathType: Prefix
