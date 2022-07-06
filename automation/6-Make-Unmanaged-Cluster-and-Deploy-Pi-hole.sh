@@ -211,3 +211,12 @@ EOF
 # Apply Pihole ingress rules
 echo "   Applying pihole ingress rules ..."
 kubectl apply -f ingress.yaml
+
+# Echo Completion
+echo "   Pihole pod deployed ..."
+echo "   You can access Pihole by going to:"
+echo "                                      http://$PIHOLE_FQDN"
+echo "   Login: admin"
+echo "   Password: $PIHOLE_ADMIN_PASSWORD"
+echo " "
+echo "   Note: You must make a DNS or HOST File entry for $PIHOLE_FQDN to be able to be accessed"
