@@ -3,6 +3,9 @@
 #### Framework from this project came from William Lam's Harbor project. You can find it here:
 https://github.com/lamw/harbor-appliance
 
+## Summary
+This project provides Hashicorp Packer code that allows you to create a VMware Virtual Appliance (OVA). The OVA is based on PhotonOS and includes Docker, Tanzu Community Edition (TCE), some OS hardening, automation for learning/standing up TCE, automation for dynamic tools installs, etc..
+
 ## Click below to download the OVA:
 https://github.com/guarddog-dev/VMware_Photon_OVA/tree/main/output-vmware-iso
 
