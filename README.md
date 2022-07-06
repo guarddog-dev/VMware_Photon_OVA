@@ -8,7 +8,7 @@ https://github.com/guarddog-dev/VMware_Photon_OVA/tree/main/output-vmware-iso
 
 ## Prior to first run:
 #### Due to requirements, it is recommended to build this OVA from a Ubuntu Linux desktop with a GUI.
-1. Configure the variables in photon.variables.pkr.hcl. If you wish to change the USERD variable from administrator, you will also need to update many of the shell script files with the updated user account (USERD=[xx]).
+1. Configure the variables in photon.variables.pkr.hcl. If you wish to change the USERD variable from root, you will also need to update many of the shell script files with the updated user account (USERD=[xx]).
 Note: Do not put any capital letters in the name of the VM if you change the vm name, as this will cause the install to fail.
 
 2. Configure the variables in the photon.variables.pkr.hcl 
