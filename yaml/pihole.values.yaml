@@ -129,7 +129,7 @@ serviceWeb:
     # metallb.universe.tf/address-pool: network-services
     # metallb.universe.tf/allow-shared-ip: pihole-svc
 
-virtualHost: pihole
+virtualHost: "pi.hole"
 
 # -- Configuration for the Ingress
 ingress:
@@ -369,7 +369,7 @@ webHttp: "80"
 webHttps: "443"
 
 # -- hostname of pod
-hostname: ""
+#hostname: ""
 
 # -- should the container use host network
 hostNetwork: "false"
@@ -430,4 +430,23 @@ podDnsConfig:
   nameservers:
   - 127.0.0.1
   - 8.8.8.8
+
+#added manually for contour
+namespace: pihole
+hostname: pihole
+subdomain: guarddog.lab
+tlsCertificate:
+  tls.crt:
+  tls.key:
+  ca.crt:
+tlsCertificateSecretName:
+enableContourHttpProxy: true
+contourHttpProxy:
+  timeout: 0s
+  idleTimeout: 5m
+proxy:
+  httpProxy:
+  httpsProxy:
+  noProxy: 127.0.0.1,localhost,.local,.internal
+pspNames: null
 
