@@ -7,6 +7,7 @@ https://github.com/lamw/harbor-appliance
 https://github.com/guarddog-dev/VMware_Photon_OVA/tree/main/output-vmware-iso
 
 ## Prior to first run:
+#### Due to requirements, it is recommended to build this OVA from a Ubuntu Linux desktop with a GUI.
 1. Configure the variables in photon.variables.pkr.hcl. If you wish to change the USERD variable from administrator, you will also need to update many of the shell script files with the updated user account (USERD=[xx]).
 Note: Do not put any capital letters in the name of the VM if you change the vm name, as this will cause the install to fail.
 
@@ -37,7 +38,7 @@ Note: Do not put any capital letters in the name of the VM if you change the vm 
 5. Update the Photon ISO URL/Checksums with newer versions if needed. If you wish to do this, you will also likely need to update the photon.json "boot_command" section for the updated OS version.
 
 6. Install ovftool, git-all, powershell, and packer utilities.
-#### Due to requirements, it is recommended to build this OVA from a Ubuntu Linux desktop with a GUI.
+
 #### Download the ovftool from VMware Developer (get the lastest version). This will require a standard browser like Firefox or Chromium.
 https://developer.vmware.com/web/tool/4.4.0/ovf
 #### setup scripting to be runable
