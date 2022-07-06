@@ -189,6 +189,7 @@ echo "   Info on new pod includes:"
 kubectl get pods -n pihole -o wide
 kubectl get pvc -n pihole
 kubectl get services -n pihole -o wide
+echo " "
 
 # Create Pihole ingress rules
 echo "   Creating pihole ingress rules ..."
