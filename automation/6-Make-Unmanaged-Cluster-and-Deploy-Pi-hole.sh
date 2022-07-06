@@ -138,12 +138,17 @@ cd ${REPONAME}
 git sparse-checkout init --cone
 git sparse-checkout add ${REPOFOLDER}
 cd ${REPOFOLDER}
-mv pihole.values.yaml /${USERD}/automation
+mv pihole.values.yaml /${USERD}/automation/.
 echo -e "\e[92m  Cleaning up YAML Repo Folder ..." > /dev/console
-# clean up Repo Folder
-rm *
+rm -rf *
+rm -rf .*
 cd ..
 rmdir ${REPOFOLDER}
+# clean up Repo Folder
+rm -rf *
+rm -rf .*
+cd ..
+rmdir ${REPONAME}
 
 # Create Namespace pihole
 echo "   Creating Namespace pihole ..."
