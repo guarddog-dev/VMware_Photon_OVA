@@ -179,12 +179,14 @@ helm install pihole mojo2600/pihole \
   --replace 
 
 kubectl get pods -n pihole -o wide
+kubectl get pvc -n pihole -o wide
 kubectl get services -n pihole -o wide
 
 # Validate that pihole pod is ready
 echo "   Validate that pihole pod is ready ..."
 PIHOLEPOD=$(kubectl get po -n pihole | grep pihole | cut -d " " -f 1)
-while [[ $(kubectl get po -n pihole $PIHOLEPOD -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo "Waiting for pod $PIHOLEPOD to be ready" && sleep 1; done
+while [[ $(kubectl get po -n pihole $PIHOLEPOD -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo "   Waiting for pod $PIHOLEPOD to be ready ..." && sleep 10s; done
+echo "   Pod $PIHOLEPOD is now ready ..."
 
 # Create Pihole ingress rules
 echo "   Creating pihole ingress rules ..."
@@ -213,6 +215,8 @@ echo "   Applying pihole ingress rules ..."
 kubectl apply -f ingress.yaml
 
 # Echo Completion
+sleep 10s
+clear
 echo "   Pihole pod deployed ..."
 echo "   You can access Pihole by going to:"
 echo "                                      http://$PIHOLE_FQDN"
