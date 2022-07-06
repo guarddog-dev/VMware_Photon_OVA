@@ -1,7 +1,10 @@
-## Packer config to build vSphere/ESXi virtual machines templates from Photon OS ISO file as a source.
+## Demo Appliance for Tanzu Community Edition with Packer config 
 
 #### Framework from this project came from William Lam's Harbor project. You can find it here:
 https://github.com/lamw/harbor-appliance
+
+## Click below to download the OVA:
+https://github.com/guarddog-dev/VMware_Photon_OVA/tree/main/output-vmware-iso
 
 ## Prior to first run:
 1. Configure the variables in photon.variables.pkr.hcl. If you wish to change the USERD variable from administrator, you will also need to update many of the shell script files with the updated user account (USERD=[xx]).
