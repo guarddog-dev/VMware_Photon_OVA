@@ -220,3 +220,4 @@ echo "   Login: admin"
 echo "   Password: $PIHOLE_ADMIN_PASSWORD"
 echo " "
 echo "   Note: You must make a DNS or HOST File entry for $PIHOLE_FQDN to be able to be accessed"
+sleep 60s
