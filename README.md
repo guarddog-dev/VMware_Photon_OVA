@@ -1,4 +1,4 @@
-## Demo Appliance for Tanzu Community Edition with Packer config 
+## OVA Appliance for Tanzu Community Edition with Packer config based on PhotonOS
 
 #### Framework from this project came from William Lam's Harbor project. You can find it here:
 https://github.com/lamw/harbor-appliance
