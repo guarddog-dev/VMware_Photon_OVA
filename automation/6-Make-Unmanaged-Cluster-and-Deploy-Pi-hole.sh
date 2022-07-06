@@ -176,10 +176,16 @@ echo "   Using helm to install pihole ..."
 helm install pihole mojo2600/pihole \
   --namespace pihole \
   --values pihole.values.yaml \
-  --replace \
+  --replace 
 
 kubectl get pods -n pihole -o wide
 kubectl get services -n pihole -o wide
+
+# Validate that pihole pod is ready
+echo "   Validate that pihole pod is ready ..."
+PIHOLEPOD=$(kubectl get po -n pihole | grep pihole | cut -d " " -f 1)
+while [[ $(kubectl get po -n pihole $PIHOLEPOD -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo "Waiting for pod $PIHOLEPOD to be ready" && sleep 1; done
+
 
 # Create Pihole ingress rules
 echo "   Creating pihole ingress rules ..."
