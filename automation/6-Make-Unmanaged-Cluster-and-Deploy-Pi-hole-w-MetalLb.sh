@@ -123,8 +123,9 @@ echo "   Pihole pod info: ..."
 kubectl get pods -n pihole -o wide
 kubectl get services -n pihole -o wide
 kubectl describe services -n pihole pihole-web
-kubectl logs ${PIHOLEPOD} -n pihole --all-containers
 kubectl get ingress -n pihole -A
+kubectl logs ${PIHOLEPOD} -n pihole --all-containers
+sleep 10s
 
 <<com
 # Create Pihole ingress rules
