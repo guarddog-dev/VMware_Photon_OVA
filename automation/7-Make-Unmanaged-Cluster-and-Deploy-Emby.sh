@@ -8,11 +8,11 @@ CERT_MANAGER_PACKAGE_VERSION=1.8.0
 #Version of Contour/Envoy to install
 CONTOUR_PACKAGE_VERSION=1.20.1
 #Internal Domain name
-DOMAIN_NAME=$(echo $HOSTNAME | cut -d '.' -f 2-3)
+DOMAIN_NAME=$(hostname -d)
 #Internal DNS Entry to that resolves to the EMBY fqdn - you must make this DNS Entry
 EMBY_FQDN="emby.${DOMAIN_NAME}"
 #EMBY Admin Password
-EMBY_ADMIN_PASSWORD="VMware12345!"
+EMBY_ADMIN_PASSWORD='VMware12345!'
 #Tanzu/Kubernetes cluster name
 CLUSTER_NAME='local-cluster'
 #Control Plane Name
@@ -150,9 +150,9 @@ helm install emby k8s-at-home/emby \
   --set image.tag="latest"
 
 # Validate that EMBY pod is ready
-echo "   Validate that EMBY pod is ready ..."
-EMBYPOD=$(kubectl get po -n EMBY | grep emby | cut -d " " -f 1)
-while [[ $(kubectl get po -n EMBY $EMBYPOD -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo "   Waiting for pod $EMBYPOD to be ready ..." && sleep 10s; done
+echo "   Validate that emby pod in namespace emby is ready ..."
+EMBYPOD=$(kubectl get pods --namespace emby -l "app.kubernetes.io/name=emby,app.kubernetes.io/instance=emby" -o jsonpath="{.items[0].metadata.name}")
+while [[ $(kubectl get po -n emby $EMBYPOD -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo "   Waiting for pod $EMBYPOD to be ready ..." && sleep 10s; done
 echo "   Pod $EMBYPOD is now ready ..."
 
 # Echo pod info
