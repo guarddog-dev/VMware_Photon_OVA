@@ -15,13 +15,13 @@ PROMETHEUS_PACKAGE_VERSION="2.27.0-1"
 #Version of Grafana to install
 GRAFANA_PACKAGE_VERSION="7.5.11"
 #Internal Domain name
-DOMAIN_NAME=$(echo $HOSTNAME | cut -d '.' -f 2-3)
+DOMAIN_NAME=$(hostname -d)
 #Internal DNS Entry to that resolves to the prometheus fqdn - you must make this DNS Entry
 PROMETHEUS_FQDN="prometheus.${DOMAIN_NAME}"
 #Internal DNS Entry to that resolves to the grafana fqdn - you must make this DNS Entry
 GRAFANA_FQDN="grafana.${DOMAIN_NAME}"
 #Grafana default admin password
-GRAFANA_ADMIN_PASSWORD="VMware12345!"
+GRAFANA_ADMIN_PASSWORD='VMware12345!'
 #Tanzu/Kubernetes cluster name
 CLUSTER_NAME='local-cluster'
 #Control Plane Name

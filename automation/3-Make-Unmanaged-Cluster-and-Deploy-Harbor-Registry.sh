@@ -10,9 +10,9 @@ CONTOUR_PACKAGE_VERSION=1.20.1
 #Version of Harbor to install
 HARBOR_PACKAGE_VERSION=2.4.2
 #Harbor Admin Password
-HARBOR_ADMIN_PASSWORD="VMware12345!"
+HARBOR_ADMIN_PASSWORD='VMware12345!'
 #Internal Domain name
-DOMAIN_NAME=$(echo $HOSTNAME | cut -d '.' -f 2-3)
+DOMAIN_NAME=$(hostname -d)
 #Internal DNS Entry to that resolves to the harbor fqdn - you must make this DNS Entry
 HARBOR_FQDN="harbor.${DOMAIN_NAME}"
 #Tanzu/Kubernetes cluster name

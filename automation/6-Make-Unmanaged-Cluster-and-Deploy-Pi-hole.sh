@@ -8,11 +8,11 @@ CERT_MANAGER_PACKAGE_VERSION=1.8.0
 #Version of Contour/Envoy to install
 CONTOUR_PACKAGE_VERSION=1.20.1
 #Internal Domain name
-DOMAIN_NAME=$(echo $HOSTNAME | cut -d '.' -f 2-3)
+DOMAIN_NAME=$(hostname -d)
 #Internal DNS Entry to that resolves to the Pi-hole fqdn - you must make this DNS Entry
 PIHOLE_FQDN="pihole.${DOMAIN_NAME}"
 #Pihole Admin Password
-PIHOLE_ADMIN_PASSWORD="VMware12345!"
+PIHOLE_ADMIN_PASSWORD='VMware12345!'
 #Tanzu/Kubernetes cluster name
 CLUSTER_NAME='local-cluster'
 #Control Plane Name
