@@ -26,7 +26,7 @@ REPOFOLDER="yaml"
 
 # Create Unmanaged Cluster
 echo '   Creating Unmanaged Cluster ...'
-tanzu um create $CLUSTER_NAME -p 80:80 -p 443:443 -c calico
+tanzu um create $CLUSTER_NAME -p 80:80 -p 443:443 -p 8096:8096 -c calico
 
 # Valideate Cluster is ready
 echo "   Validating Unmanaged Cluster $CLUSTER_NAME is Ready ..."
@@ -151,7 +151,7 @@ helm install emby k8s-at-home/emby \
 
 # Validate that EMBY pod is ready
 echo "   Validate that emby pod in namespace emby is ready ..."
-EMBYPOD=$(kubectl get pods --namespace emby -l "app.kubernetes.io/name=emby,app.kubernetes.io/instance=emby" -o jsonpath="{.items[0].metadata.name}")
+EMBYPOD=$(kubectl get po -n emby | grep emby | cut -d " " -f 1)
 while [[ $(kubectl get po -n emby $EMBYPOD -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo "   Waiting for pod $EMBYPOD to be ready ..." && sleep 10s; done
 echo "   Pod $EMBYPOD is now ready ..."
 
@@ -160,7 +160,7 @@ echo "   Info on new pod includes:"
 kubectl get pods -n emby -o wide
 kubectl get pvc -n emby
 kubectl get services -n emby -o wide
-kubectl logs $(EMBYPOD) -n emby --all-containers
+#kubectl logs $(EMBYPOD) -n emby --all-containers
 echo " "
 
 # Create EMBY ingress rules
@@ -201,7 +201,7 @@ sleep 10s
 clear
 echo "   EMBY pod deployed ..."
 echo "   You can access EMBY by going to:"
-echo "                                      http://$EMBY_FQDN"
+echo "                                      http://$EMBY_FQDN/8096"
 echo " "
 echo "   Note: You must make a DNS or HOST File entry for $EMBY_FQDN to be able to be accessed."
 echo "   Note: You will need to have 20Gi of space on your kubernetes appliance for emby db/logs."
