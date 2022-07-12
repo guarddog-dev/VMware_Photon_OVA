@@ -93,7 +93,7 @@ helm install pihole mojo2600/pihole \
 
 # Validate that pihole pod is ready
 echo "   Validate that pihole pod is ready ..."
-PIHOLEPOD=$(kubectl get pods --namespace pihole -l "app.kubernetes.io/name=pihole,app.kubernetes.io/instance=pihole" -o jsonpath="{.items[0].metadata.name}")
+PIHOLEPOD=$(kubectl get po -n pihole | grep pihole | cut -d " " -f 1)
 while [[ $(kubectl get po -n pihole $PIHOLEPOD -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo "Waiting for pod $PIHOLEPOD to be ready" && sleep 1; done
 echo "   Pod $PIHOLEPOD is now ready ..."
 
