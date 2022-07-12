@@ -32,7 +32,8 @@ tdnf install -y \
   bindutils \
   dmidecode \
   rsyslog \
-  audit
+  audit \
+  lsof
   
 #Enable Audit Daemon Service
 sudo systemctl enable auditd.service
