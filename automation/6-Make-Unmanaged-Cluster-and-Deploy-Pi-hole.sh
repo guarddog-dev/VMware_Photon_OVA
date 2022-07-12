@@ -1,10 +1,8 @@
 #!/bin/bash
-# Setup Pi-Hole Using Metallb
+# Setup Pi-Hole
 echo '  Preparing for Pi-Hole ...'
 
 # Versions
-#Version of MetalLB Version to install
-METALLBVERSION=0.12.1
 #Internal Domain name
 DOMAIN_NAME=$(hostname -d)
 #Internal DNS Entry to that resolves to the Pi-hole fqdn - you must make this DNS Entry
@@ -115,12 +113,15 @@ kubectl get ingress -n pihole -A
 
 # Echo Completion
 sleep 10s
+IP_ADDRESS=$(/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
 clear
 echo "   Pihole pod deployed ..."
 echo "   You can access Pihole by going to:"
-echo "                                      http://$PIHOLE_FQDN"
-echo "   Login: admin"
-echo "   Password: $PIHOLE_ADMIN_PASSWORD"
+echo "                                      http://$PIHOLE_FQDN/admin"
+echo "                                      or"
+echo "                                      http://$IP_ADDRESS/admin"
+echo " "
+echo "   Management Password: $PIHOLE_ADMIN_PASSWORD"
 echo " "
 echo "   Note: You must make a DNS or HOST File entry for $PIHOLE_FQDN to be able to be accessed"
 sleep 60s
