@@ -1,6 +1,7 @@
 #!/bin/bash
 # Setup EMBY Using Contour
 echo '  Preparing for Emby ...'
+# Reference https://artifacthub.io/packages/helm/k8s-at-home/emby
 
 # Versions
 #Version of Cert Manager to install
@@ -126,7 +127,6 @@ sleep 20s
 
 ## Install EMBY
 echo "   Adding helm repo k8s-at-home for Emby deployment ..."
-#Reference https://artifacthub.io/packages/helm/k8s-at-home/emby
 helm repo add k8s-at-home https://k8s-at-home.com/charts/
 helm repo update
 

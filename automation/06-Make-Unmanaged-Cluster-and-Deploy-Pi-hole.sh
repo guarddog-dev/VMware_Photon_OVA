@@ -1,6 +1,8 @@
 #!/bin/bash
 # Setup Pi-Hole
 echo '  Preparing for Pi-Hole ...'
+# Reference: https://artifacthub.io/packages/helm/mojo2600/pihole
+# Reference: https://greg.jeanmart.me/2020/04/13/self-host-pi-hole-on-kubernetes-and-block-ad/
 
 # Versions
 #Internal Domain name
@@ -44,7 +46,6 @@ sleep 20s
 
 ## Install Pi-Hole
 echo "   Adding helm repo mojo2600 for pihole deployment ..."
-#Reference https://greg.jeanmart.me/2020/04/13/self-host-pi-hole-on-kubernetes-and-block-ad/
 helm repo add mojo2600 https://mojo2600.github.io/pihole-kubernetes/
 helm repo update
 
