@@ -103,6 +103,13 @@ kubectl describe services -n pihole
 kubectl get ingress -n pihole -A
 #kubectl logs ${PIHOLEPOD} -n pihole --all-containers
 
+# Test NSLOOKUP against Pihole
+echo "   Testing Piholes DNS ..."
+NODE_IP=$(kubectl get node ${CONTROL_PLANE} -o yaml | grep 'projectcalico.org/IPv4Address:' | cut -d " " -f 6 | cut -d "/" -f 1)
+nslookup vmware.com ${NODE_IP}
+
+# Create Ingress Rule
+
 # Setup Pihole for local DNS resolution
 #echo "   Setting Pihole DNS resolution for local PhotonOS ..."
 #sudo unlink /etc/resolv.conf
@@ -124,4 +131,8 @@ echo " "
 echo "   Management Password: $PIHOLE_ADMIN_PASSWORD"
 echo " "
 echo "   Note: You must make a DNS or HOST File entry for $PIHOLE_FQDN to be able to be accessed"
+echo " "
+echo "   Use the below commands to test the Pihole DNS Server from within the OVA"
+echo "   NODE_IP=$(kubectl get node ${CONTROL_PLANE} -o yaml | grep 'projectcalico.org/IPv4Address:' | cut -d " " -f 6 | cut -d "/" -f 1)"
+echo '   nslookup vmware.com ${NODE_IP}'
 sleep 60s
