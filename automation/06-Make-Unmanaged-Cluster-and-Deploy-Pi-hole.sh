@@ -84,7 +84,7 @@ helm install pihole mojo2600/pihole \
   --set ingress.hosts[0]="$(hostname -d)" \
   --set persistentVolumeClaim.enabled="true" \
   --set admin.existingSecret="pihole-secret" \
-  --set doh.enabled="false" \
+  --set doh.enabled="true" \
   --set hostname="pihole" \
   --set dnsHostPort.enabled="true" \
   --set serviceDns.mixedService="true" \
@@ -110,6 +110,21 @@ NODE_IP=$(kubectl get node ${CONTROL_PLANE} -o yaml | grep 'projectcalico.org/IP
 nslookup vmware.com ${NODE_IP}
 
 # Create Ingress Rule
+echo "   Creating Ingress Rules ..."
+sudo iptables -A FORWARD -i eth0 -j ACCEPT
+sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+sudo iptables -t nat -I POSTROUTING -s 127.0.0.1 -d ${NODE_IP} -j MASQUERADE
+echo "   Creating Ingress Rules for DNS port 53 ..."
+sudo iptables -t nat -I PREROUTING -i lo -d 127.0.0.1 -p tcp --dport 53 -j DNAT --to-destination ${NODE_IP}:53
+sudo iptables -t nat -I PREROUTING -i lo -d 127.0.0.1 -p udp --dport 53 -j DNAT --to-destination ${NODE_IP}:53
+sudo iptables -t nat -I PREROUTING -i eth0 -p tcp --dport 53 -j DNAT --to-destination ${NODE_IP}:53
+sudo iptables -t nat -I PREROUTING -i eth0 -p udp --dport 53 -j DNAT --to-destination ${NODE_IP}:53
+sudo iptables -t nat -I OUTPUT -o lo -p tcp --dport 53 -j DNAT --to-destination ${NODE_IP}:53
+sudo iptables -t nat -I OUTPUT -o lo -p udp --dport 53 -j DNAT --to-destination ${NODE_IP}:53
+echo "   Creating Ingress Rules for DHCP port 67 ..."
+sudo iptables -t nat -I PREROUTING -i lo -d 127.0.0.1 -p udp --dport 67 -j DNAT --to-destination ${NODE_IP}:67
+sudo iptables -t nat -I PREROUTING -i eth0 -p udp --dport 67 -j DNAT --to-destination ${NODE_IP}:67
+sudo iptables -t nat -I OUTPUT -o lo -p udp --dport 67 -j DNAT --to-destination ${NODE_IP}:67
 
 # Setup Pihole for local DNS resolution
 #echo "   Setting Pihole DNS resolution for local PhotonOS ..."
