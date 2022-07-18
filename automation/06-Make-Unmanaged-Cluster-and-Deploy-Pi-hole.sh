@@ -125,6 +125,7 @@ echo "   Creating Ingress Rules for DHCP port 67 ..."
 sudo iptables -t nat -I PREROUTING -i lo -d 127.0.0.1 -p udp --dport 67 -j DNAT --to-destination ${NODE_IP}:67
 sudo iptables -t nat -I PREROUTING -i eth0 -p udp --dport 67 -j DNAT --to-destination ${NODE_IP}:67
 sudo iptables -t nat -I OUTPUT -o lo -p udp --dport 67 -j DNAT --to-destination ${NODE_IP}:67
+sudo iptables-save > /etc/systemd/scripts/ip4save
 
 # Setup Pihole for local DNS resolution
 #echo "   Setting Pihole DNS resolution for local PhotonOS ..."
