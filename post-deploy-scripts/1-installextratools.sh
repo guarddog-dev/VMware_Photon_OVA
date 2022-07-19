@@ -123,6 +123,11 @@ tdnf -y install tcpdump > /dev/null 2>&1
 echo "   Installing Netcat ..."
 tdnf -y install netcat > /dev/null 2>&1
 
+#Install jq
+#https://vmware.github.io/photon/assets/files/html/3.0/photon_admin/installing-the-packages-for-tcpdump-and-netcat-with-tdnf.html
+echo "   Installing jq ..."
+tdnf -y install jq > /dev/null 2>&1
+
 #Install Kustomize
 #https://kustomize.io/
 echo "   Installing kustomize ..."
