@@ -1,2 +1,6 @@
 #output-vmware-iso/*.ova
 output-vmware-iso/*.tmp
+output-vmware-iso/*.vmdk
+output-vmware-iso/*.nvram
+output-vmware-iso/*.ovf
+output-vmware-iso/*.xml
