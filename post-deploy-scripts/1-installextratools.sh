@@ -116,17 +116,17 @@ kubectl krew install sniff
 #Install TCP Dump
 #https://vmware.github.io/photon/assets/files/html/3.0/photon_admin/installing-the-packages-for-tcpdump-and-netcat-with-tdnf.html
 echo "   Installing TCPDump ..."
-tdnf -y install tcpdump
+tdnf -y install tcpdump > /dev/null 2>&1
 
 #Install netcat
 #https://vmware.github.io/photon/assets/files/html/3.0/photon_admin/installing-the-packages-for-tcpdump-and-netcat-with-tdnf.html
 echo "   Installing Netcat ..."
-tdnf -y install netcat
+tdnf -y install netcat > /dev/null 2>&1
 
 #Install Kustomize
 #https://kustomize.io/
 echo "   Installing kustomize ..."
-curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
+curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash > /dev/null 2>&1
 chmod +x ./kustomize
 sudo mv ./kustomize /usr/bin/kustomize
 
