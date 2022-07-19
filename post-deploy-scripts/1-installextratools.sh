@@ -2,6 +2,7 @@
 
 ##Install Extra Tools
 echo "  Installing Tools ..."
+lastreleaseversion() { git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' "$1" | cut -d/ -f3- | tail -n1 | cut -d '^' -f 1 | cut -d 'v' -f 2; }
 mkdir tools
 cd tools
 
@@ -106,6 +107,37 @@ echo 'export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"' >> /etc/profile
 echo "   Installing kubectl tree ..."
 kubectl krew install tree
 #kubectl tree --version
+
+#Install ksniff
+#https://github.com/eldadru/ksniff
+echo "   Installing kubectl sniff (ksniff) ..."
+kubectl krew install sniff
+
+#Install TCP Dump
+#https://vmware.github.io/photon/assets/files/html/3.0/photon_admin/installing-the-packages-for-tcpdump-and-netcat-with-tdnf.html
+echo "   Installing TCPDump ..."
+tdnf -y install tcpdump
+
+#Install netcat
+#https://vmware.github.io/photon/assets/files/html/3.0/photon_admin/installing-the-packages-for-tcpdump-and-netcat-with-tdnf.html
+echo "   Installing Netcat ..."
+tdnf -y install netcat
+
+#Install Kustomize
+#https://kustomize.io/
+echo "   Installing kustomize ..."
+curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
+chmod +x ./kustomize
+sudo mv ./kustomize /usr/bin/kustomize
+
+#Install KIND
+#https://kind.sigs.k8s.io/docs/user/quick-start/#installing-with-a-package-manager
+echo "   Installing kind ..."
+RELEASEURL="https://github.com/kubernetes-sigs/kind"
+VERSION=$(lastreleaseversion ${RELEASEURL})
+curl -Lo ./kind https://kind.sigs.k8s.io/dl/v${VERSION}/kind-linux-amd64
+chmod +x ./kind
+sudo mv ./kind /usr/bin/kind
 
 #Clean up temp tools directory
 cd ..
