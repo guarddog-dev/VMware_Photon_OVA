@@ -172,6 +172,7 @@ METALLBDHCPUDPIP=$(kubectl get svc -n pihole pihole-dhcp --output jsonpath='{.st
 sudo iptables -t nat -I PREROUTING -i lo -d 127.0.0.1 -p udp --dport 67 -j DNAT --to-destination ${METALLBDHCPUDPIP}:67
 sudo iptables -t nat -I PREROUTING -i eth0 -p udp --dport 67 -j DNAT --to-destination ${METALLBDHCPUDPIP}:67
 sudo iptables -t nat -I OUTPUT -o lo -p udp --dport 67 -j DNAT --to-destination ${METALLBDHCPUDPIP}:67
+echo "   Saving IP Tables Config ..."
 sudo iptables-save > /etc/systemd/scripts/ip4save
 
 # Setup Pihole for local DNS resolution
