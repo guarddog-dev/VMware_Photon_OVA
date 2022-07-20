@@ -4,7 +4,14 @@ echo '  Preparing for Pi-Hole ...'
 # Reference: https://artifacthub.io/packages/helm/mojo2600/pihole
 # Reference: https://greg.jeanmart.me/2020/04/13/self-host-pi-hole-on-kubernetes-and-block-ad/
 
+# Add Function
+lastreleaseversion() { git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' "$1" | cut -d/ -f3- | tail -n1 | cut -d '^' -f 1 | cut -d 'v' -f 2; }
+
 # Versions
+#Version of MetalLB to install
+#RELEASEURL="https://github.com/metallb/metallb"
+#VERSION=$(lastreleaseversion ${RELEASEURL})
+METALLBVERSION=0.12.1
 #Internal Domain name
 DOMAIN_NAME=$(hostname -d)
 #Internal DNS Entry to that resolves to the Pi-hole fqdn - you must make this DNS Entry
@@ -46,7 +53,6 @@ sleep 20s
 
 ## Install MetalLB (load-balancer)
 echo "   Setting up MetalLb Load-balancer ..."
-METALLBVERSION=0.12.1
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v${METALLBVERSION}/manifests/namespace.yaml
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v${METALLBVERSION}/manifests/metallb.yaml
 kubectl -n metallb-system get all
@@ -108,10 +114,10 @@ helm install pihole mojo2600/pihole \
   --replace \
   --set image.tag="latest" \
   --set extraEnvVars.TZ="${TZ}" \
-  --set hostNetwork="false" \
+  --set hostNetwork="true" \
   --set serviceDns.type="LoadBalancer" \
   --set serviceDhcp.type="LoadBalancer" \
-  --set serviceWeb.type="LoadBalancer" \
+  --set serviceWeb.type="ClusterIP" \
   --set virtualHost="pihole" \
   --set ingress.enabled="true" \
   --set ingress.hosts[0]="$(hostname -d)" \
@@ -147,11 +153,11 @@ echo "   Creating Ingress Rules ..."
 sudo iptables -A FORWARD -i eth0 -j ACCEPT
 sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 sudo iptables -t nat -I POSTROUTING -s 127.0.0.1 -d ${NODE_IP} -j MASQUERADE
-echo "   Creating Ingress Rules for HTTP port 80 ..."
+#echo "   Creating Ingress Rules for HTTP port 80 ..."
 METALLBWEBTCPIP=$(kubectl get svc -n pihole pihole-web --output jsonpath='{.status.loadBalancer.ingress[0].ip}')
-sudo iptables -t nat -I PREROUTING -i lo -d 127.0.0.1 -p tcp --dport 80 -j DNAT --to-destination ${METALLBWEBTCPIP}:80
-sudo iptables -t nat -I PREROUTING -i eth0 -p tcp --dport 80 -j DNAT --to-destination ${METALLBWEBTCPIP}:80
-sudo iptables -t nat -I OUTPUT -o lo -p tcp --dport 80 -j DNAT --to-destination ${METALLBWEBTCPIP}:80
+#sudo iptables -t nat -I PREROUTING -i lo -d 127.0.0.1 -p tcp --dport 80 -j DNAT --to-destination ${METALLBWEBTCPIP}:80
+#sudo iptables -t nat -I PREROUTING -i eth0 -p tcp --dport 80 -j DNAT --to-destination ${METALLBWEBTCPIP}:80
+#sudo iptables -t nat -I OUTPUT -o lo -p tcp --dport 80 -j DNAT --to-destination ${METALLBWEBTCPIP}:80
 echo "   Creating Ingress Rules for DNS port 53 ..."
 METALLBDNSTCPIP=$(kubectl get svc -n pihole pihole-dns-tcp --output jsonpath='{.status.loadBalancer.ingress[0].ip}')
 METALLBDNSUDPIP=$(kubectl get svc -n pihole pihole-dns-udp --output jsonpath='{.status.loadBalancer.ingress[0].ip}')
@@ -166,6 +172,7 @@ METALLBDHCPUDPIP=$(kubectl get svc -n pihole pihole-dhcp --output jsonpath='{.st
 sudo iptables -t nat -I PREROUTING -i lo -d 127.0.0.1 -p udp --dport 67 -j DNAT --to-destination ${METALLBDHCPUDPIP}:67
 sudo iptables -t nat -I PREROUTING -i eth0 -p udp --dport 67 -j DNAT --to-destination ${METALLBDHCPUDPIP}:67
 sudo iptables -t nat -I OUTPUT -o lo -p udp --dport 67 -j DNAT --to-destination ${METALLBDHCPUDPIP}:67
+echo "   Saving IP Tables Config ..."
 sudo iptables-save > /etc/systemd/scripts/ip4save
 
 # Setup Pihole for local DNS resolution
