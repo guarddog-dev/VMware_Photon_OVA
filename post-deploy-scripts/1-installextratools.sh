@@ -180,7 +180,7 @@ rm -rf skopeo
 rm -rf go
 
 #Remove Utilities
-echo "   Removing Temporary Utilites ..."
+echo "   Removing Temporary Packages ..."
 tdnf remove -y build-essential > /dev/null 2>&1
 tdnf remove -y gpgme-devel > /dev/null 2>&1
 tdnf remove -y device-mapper-devel > /dev/null 2>&1
