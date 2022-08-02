@@ -144,6 +144,49 @@ curl -Lo ./kind https://kind.sigs.k8s.io/dl/v${VERSION}/kind-linux-amd64
 chmod +x ./kind
 sudo mv ./kind /usr/bin/kind
 
+#Install jam
+echo "   Installing jam ..."
+tdnf install -y go > /dev/null 2>&1
+git clone https://github.com/paketo-buildpacks/jam > /dev/null 2>&1
+cd jam
+go build > /dev/null 2>&1
+mv jam /usr/bin/jam
+cd ..
+rm -rf jam
+rm -rf go
+
+#Install go-md2man
+echo "   Installing go-md2man ..."
+git clone https://github.com/cpuguy83/go-md2man > /dev/null 2>&1
+cd go-md2man
+make > /dev/null 2>&1
+mv ./bin/go-md2man /usr/bin/go-md2man
+cd ..
+rm -rf go-md2man
+rm -rf go
+
+#Install skopeo
+echo "   Installing skopeo ..."
+tdnf install -y go > /dev/null 2>&1
+tdnf install -y build-essential > /dev/null 2>&1
+tdnf install -y gpgme-devel > /dev/null 2>&1
+tdnf install -y device-mapper-devel > /dev/null 2>&1
+git clone https://github.com/containers/skopeo > /dev/null 2>&1
+cd skopeo
+make > /dev/null 2>&1
+mv ./bin/skopeo /usr/bin/skopeo
+cd ..
+rm -rf skopeo
+rm -rf go
+
+#Remove Utilities
+echo "   Removing Temporary Utilites ..."
+tdnf remove -y build-essential > /dev/null 2>&1
+tdnf remove -y gpgme-devel > /dev/null 2>&1
+tdnf remove -y device-mapper-devel > /dev/null 2>&1
+tdnf remove -y go > /dev/null 2>&1
+rm -rf go
+
 #Clean up temp tools directory
 cd ..
 rmdir tools
