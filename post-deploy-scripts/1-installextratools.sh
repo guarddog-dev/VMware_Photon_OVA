@@ -186,6 +186,7 @@ tdnf remove -y gpgme-devel > /dev/null 2>&1
 tdnf remove -y device-mapper-devel > /dev/null 2>&1
 tdnf remove -y go > /dev/null 2>&1
 rm -rf go
+rm -rf /root/go
 
 #Clean up temp tools directory
 cd ..
