@@ -33,7 +33,8 @@ tdnf install -y \
   dmidecode \
   rsyslog \
   audit \
-  lsof
+  lsof \
+  openssl-c_rehash
   
 #Enable Audit Daemon Service
 sudo systemctl enable auditd.service

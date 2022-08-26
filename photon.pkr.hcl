@@ -224,6 +224,11 @@ build {
     destination = "/root/setup/resize.sh"
     source      = "files/resize.sh"
   }
+  
+  provisioner "file" {
+    destination = "/usr/local/bin/get_uuid"
+    source      = "files/get_uuid"
+  }
 
   provisioner "file" {
     destination = "/root/automation"

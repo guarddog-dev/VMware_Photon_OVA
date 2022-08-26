@@ -47,21 +47,14 @@ sudo echo 'USERD=root' >> rclocal
 sudo echo '#Configure Issues File for Boot Info' >> rclocal
 sudo echo 'sudo chown $USERD:root /etc/issue' >> rclocal
 sudo echo 'sudo chmod 644 /etc/issue' >> rclocal
-sudo echo 'PREFIX="Welcome to GuardDog AI Security"' >> rclocal
+sudo echo 'PREFIX="Welcome to guardDog virtual unit "vFido""' >> rclocal
 sudo echo 'BOOTTIME=$(date)' >> rclocal
 sudo echo 'HOSTM=$(hostname)' >> rclocal
 sudo echo 'IFACE=eth0'  >> rclocal
 sudo echo 'IPADDRS=$(ip a s $IFACE | egrep -o "inet [0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}" | cut -d" " -f2)'  >> rclocal
 sudo echo 'read MAC </sys/class/net/$IFACE/address'  >> rclocal
 #https://kb.vmware.com/s/article/53609
-sudo echo "UUID=$(sudo dmidecode -u | awk '
-BEGIN { in1 = 0; hd = 0 }
-/, DMI type / { in1 = 0 }
-/Strings:/ { hd = 0 }
-{ if (hd == 2) { printf "%s-%s\n", $1 $2, $3 $4 $5 $6 $7 $8; hd = 0 } }
-{ if (hd == 1) { printf "UUID: %s-%s-%s-", $9 $10 $11 $12, $13 $14, $15 $16; hd = 2 } }
-/, DMI type 1,/ { in1 = 1 }
-/Header and Data:/ { if (in1 != 0) { hd = 1 } }' |  cut -d ':' -f2 | cut -d ' ' -f2)"  >> rclocal
+sudo echo 'UUID=$(get_uuid)'  >> rclocal
 sudo echo 'sudo echo "$PREFIX
 Boot Time: $BOOTTIME
 Host Name: $HOSTM

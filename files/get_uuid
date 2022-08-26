@@ -1,0 +1,11 @@
+#! /bin/sh
+#https://kb.vmware.com/s/article/53609
+
+(dmidecode -u | awk '
+BEGIN { in1 = 0; hd = 0 }
+/, DMI type / { in1 = 0 }
+/Strings:/ { hd = 0 }
+{ if (hd == 2) { printf "%s-%s\n", $1 $2, $3 $4 $5 $6 $7 $8; hd = 0 } }
+{ if (hd == 1) { printf "UUID: %s-%s-%s-", $9 $10 $11 $12, $13 $14, $15 $16; hd = 2 } }
+/, DMI type 1,/ { in1 = 1 }
+/Header and Data:/ { if (in1 != 0) { hd = 1 } }' |  cut -d ':' -f2 | cut -d ' ' -f2)
