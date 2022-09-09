@@ -47,7 +47,7 @@ sudo echo 'USERD=root' >> rclocal
 sudo echo '#Configure Issues File for Boot Info' >> rclocal
 sudo echo 'sudo chown $USERD:root /etc/issue' >> rclocal
 sudo echo 'sudo chmod 644 /etc/issue' >> rclocal
-sudo echo 'PREFIX="Welcome to guardDog virtual unit "vFido""' >> rclocal
+sudo echo 'PREFIX="Welcome to guardDog Tanzu TCE OVA"' >> rclocal
 sudo echo 'BOOTTIME=$(date)' >> rclocal
 sudo echo 'HOSTM=$(hostname)' >> rclocal
 sudo echo 'IFACE=eth0'  >> rclocal
