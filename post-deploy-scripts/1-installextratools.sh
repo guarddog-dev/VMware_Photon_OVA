@@ -205,7 +205,7 @@ IPADDRS=$(/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $
 OCTANTPORT=7777
 #Open Firewall Port for externel access
 sudo iptables -I INPUT -p tcp -m tcp --dport $OCTANTPORT -j ACCEPT > /dev/null 2>&1
-sudo iptables-save > /etc/systemd/scripts/ip4save > /dev/null 2>&1
+sudo iptables-save > /etc/systemd/scripts/ip4save
 
 #Remove Utilities
 echo "   Removing Temporary Packages ..."
