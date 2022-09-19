@@ -179,6 +179,34 @@ cd ..
 rm -rf skopeo
 rm -rf go
 
+#Install Octant 
+#Octant Version
+echo "   Installing octant ..."
+OCTVERSION=0.25.1
+OCTTAR1="octant_"
+OCTTAR2="_Linux-64bit"
+OCTTAR3=".tar.gz"
+OCTTAR=$OCTTAR1$OCTVERSION$OCTTAR2$OCTTAR3
+OCTNAME=$OCTTAR1$OCTVERSION$OCTTAR2
+#download
+wget https://github.com/vmware-tanzu/octant/releases/download/v$OCTVERSION/$OCTTAR > /dev/null 2>&1
+#decompress
+tar -xzvf $OCTTAR > /dev/null 2>&1
+#cd to octant
+cd $OCTNAME > /dev/null 2>&1
+#move octant to the right folder
+cp octant /usr/local/bin/octant > /dev/null 2>&1
+#clean up
+cd ..
+rm -rf $OCTNAME > /dev/null 2>&1
+rm -rf $OCTTAR > /dev/null 2>&1
+#Set Octant IP/port (default is 7777)
+IPADDRS=$(/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
+OCTANTPORT=7777
+#Open Firewall Port for externel access
+sudo iptables -I INPUT -p tcp -m tcp --dport $OCTANTPORT -j ACCEPT > /dev/null 2>&1
+sudo iptables-save > /etc/systemd/scripts/ip4save > /dev/null 2>&1
+
 #Remove Utilities
 echo "   Removing Temporary Packages ..."
 tdnf remove -y build-essential > /dev/null 2>&1
