@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#move run_octant script to bin
+mv run_octant.sh /usr/local/bin/run_octant
+
 ##Install Extra Tools
 echo "  Installing Tools ..."
 lastreleaseversion() { git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' "$1" | cut -d/ -f3- | tail -n1 | cut -d '^' -f 1 | cut -d 'v' -f 2; }
