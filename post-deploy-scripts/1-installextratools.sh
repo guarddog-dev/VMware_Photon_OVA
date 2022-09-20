@@ -203,12 +203,6 @@ cp octant /usr/local/bin/octant > /dev/null 2>&1
 cd ..
 rm -rf $OCTNAME > /dev/null 2>&1
 rm -rf $OCTTAR > /dev/null 2>&1
-#Set Octant IP/port (default is 7777)
-IPADDRS=$(/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
-OCTANTPORT=7777
-#Open Firewall Port for externel access
-sudo iptables -I INPUT -p tcp -m tcp --dport $OCTANTPORT -j ACCEPT > /dev/null 2>&1
-sudo iptables-save > /etc/systemd/scripts/ip4save
 
 #Remove Utilities
 echo "   Removing Temporary Packages ..."
