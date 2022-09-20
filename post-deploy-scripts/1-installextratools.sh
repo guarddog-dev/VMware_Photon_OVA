@@ -204,6 +204,12 @@ cd ..
 rm -rf $OCTNAME > /dev/null 2>&1
 rm -rf $OCTTAR > /dev/null 2>&1
 
+#Install pinniped 
+echo "   Installing pinniped ..."
+curl -Lso pinniped https://get.pinniped.dev/v0.19.0/pinniped-cli-linux-amd64 \
+  && chmod +x pinniped \
+  && sudo mv pinniped /usr/local/bin/pinniped
+
 #Remove Utilities
 echo "   Removing Temporary Packages ..."
 tdnf remove -y build-essential > /dev/null 2>&1
