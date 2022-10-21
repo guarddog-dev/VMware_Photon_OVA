@@ -141,11 +141,9 @@ sudo mv ./kustomize /usr/bin/kustomize
 #Install KIND
 #https://kind.sigs.k8s.io/docs/user/quick-start/#installing-with-a-package-manager
 echo "   Installing kind ..."
-RELEASEURL="https://github.com/kubernetes-sigs/kind"
-VERSION=$(lastreleaseversion ${RELEASEURL})
-curl -Lo ./kind https://kind.sigs.k8s.io/dl/v${VERSION}/kind-linux-amd64
+curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.16.0/kind-linux-amd64
 chmod +x ./kind
-sudo mv ./kind /usr/bin/kind
+mv kind /usr/bin/kind
 
 #Install jam
 echo "   Installing jam ..."
